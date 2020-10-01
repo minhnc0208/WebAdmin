@@ -158,6 +158,12 @@ router.get('/edituser', function (request, response) {
 router.get('/editmonan', function (request, response) {
       response.render('editmonan');
 });
+router.get('/editloaimonan', function (request, response) {
+      response.render('editloaimonan');
+});
+router.get('/edithoadon', function (request, response) {
+      response.render('edithoadon');
+});
 app.use('/', router);
 
 app.use('/css', express.static(__dirname + '/css'));
