@@ -34,7 +34,8 @@ var mon1 = [
 ]
 
 var users1 = [
-      {
+      {     
+            hinh: '1601621017314.jpg',
             ten: 'minh',
             username: 'minhlun',
             password: 123,
@@ -43,6 +44,7 @@ var users1 = [
 
       },
       {
+            hinh: '1601621017314.jpg',
             ten: 'hung',
             username: 'anhhung',
             password: 123,
@@ -50,6 +52,7 @@ var users1 = [
             quyensudung: 'Admin'
       },
       {
+            hinh: '1601621017314.jpg',
             ten: 'minhlunscs',
             username: 'minhlunscs',
             password: 123,
@@ -62,19 +65,19 @@ var hoadon1 = [
       {
             id: 1,
             tonggia: 200000,
-
+            hinh: '1601631747036.jpg',
 
 
       },
       {
             id: 2,
             tonggia: 100000,
-
+            hinh: '1601631747036.jpg',
       },
       {
             id: 3,
             tonggia: 300000,
-
+            hinh: '1601631747036.jpg',
       }
 ]
 
@@ -211,6 +214,8 @@ router.post("/insertProduct", (req, res) => {
       res.redirect(200, '/product');
 });
 
+
+
 router.post("/insertLoaiProduct", (req, res) => {
       console.log(req.body);
       // console.log('aa');
@@ -238,7 +243,7 @@ router.post("/insertLoaiProduct", (req, res) => {
                   pros1.push({
                         hinh: dateTimeName1,
                         id: fields.MaLoaiMonAn,
-                        ten: fields.TenLoaiMon,
+                        ten: fields.TenLoaiMonAn,
 
 
                   })
@@ -247,6 +252,83 @@ router.post("/insertLoaiProduct", (req, res) => {
       res.redirect(200, '/loaiproduct');
 });
 
+
+router.post("/insertUser", (req, res) => {
+      console.log(req.body);
+      // console.log('aa');
+      const dateTimeName2 = Date.now() + '.jpg';
+
+      new formidable.IncomingForm({
+            hash: 'md5',
+            maxFileSize: 2000 * 1024 * 1024,
+            keepExtensions: true,
+            multiples: true,
+      })
+            .on('fileBegin', function (filename, file) {
+                  console.log(filename);
+                  file.path = path.join("D:/Exmaple01/Exmaple01/public", dateTimeName2);
+                  console.log(file.path);
+            })
+            .on('file', async function (name, file) {
+                  console.log(name);
+            })
+            .on('aborted', (users1) => { console.log('aborted'); })
+            .on('error', (err) => { console.log(err); res.sendStatus(400); return; })
+            .on('end', () => console.log('end'))
+            .parse(req, (err, fields, files) => {
+                  console.log(fields);
+                  users1.push({
+                        hinh: dateTimeName2,
+                        ten: fields.TenKhachHang,
+                        username:fields.TenDangNhap,
+                        password: fields.MatKhau,
+                        sodienthoai: fields.SoDienThoai,
+                        quyensudung: fields.QuyenSuDung,
+                       
+
+                  })
+            });
+
+      res.redirect(200, '/user');
+});
+
+
+router.post("/insertHoaDon", (req, res) => {
+      console.log(req.body);
+      // console.log('aa');
+      const dateTimeName3 = Date.now() + '.jpg';
+
+      new formidable.IncomingForm({
+            hash: 'md5',
+            maxFileSize: 2000 * 1024 * 1024,
+            keepExtensions: true,
+            multiples: true,
+      })
+            .on('fileBegin', function (filename, file) {
+                  console.log(filename);
+                  file.path = path.join("D:/Exmaple01/Exmaple01/public", dateTimeName3);
+                  console.log(file.path);
+            })
+            .on('file', async function (name, file) {
+                  console.log(name);
+            })
+            .on('aborted', (hoadon1) => { console.log('aborted'); })
+            .on('error', (err) => { console.log(err); res.sendStatus(400); return; })
+            .on('end', () => console.log('end'))
+            .parse(req, (err, fields, files) => {
+                  console.log(fields);
+                  hoadon1.push({
+                        hinh: dateTimeName3,
+                        id: fields.MaHoaDon,
+                        tonggia:fields.TongGia,
+                        
+                        
+
+                  })
+            });
+
+      res.redirect(200, '/hoadon');
+});
 
 app.use('/', router);
 

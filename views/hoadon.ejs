@@ -119,7 +119,7 @@
                     <% hoadon1.forEach(function(item){ %>
                     <tr>
                         <td style="width: 20%;">
-                            <img src="../uploads/" alt=""  style="width: 100%; height: 8rem;"  > 
+                            <img src="<%= item.hinh %>" alt=""  style="width: 100%; height: 8rem;"  > 
                      
                          </td>
                         <td class="tcenter"><%= item.id %></td>
@@ -179,15 +179,15 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="/uploadCarUser" enctype="multipart/form-data">
+                    <form method="POST" action="/insertHoaDon" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label"> Mã hóa đơn :</label>
-                            <input type="text" class="form-control" id="recipient-name" name="carName">
+                            <input type="text" class="form-control" id="recipient-name" name="MaHoaDon">
                         </div>
 
                         <div class="form-group">
                             <label for="message-text" class="col-form-label"> Tổng giá:</label>
-                            <textarea class="form-control" id="message-text" name="vehicleMaintenance"></textarea>
+                            <textarea class="form-control" id="message-text" name="TongGia"></textarea>
                         </div>
                         <label for="recipient-name" class="col-form-label">Ảnh hóa đơn :</label>
                         <br>
