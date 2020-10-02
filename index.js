@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser');
-const formidable  = require('formidable')
+const formidable = require('formidable')
 app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
 app.use(bodyParser.json()); // support json encoded bodies
 const router = express();
@@ -81,19 +81,19 @@ var hoadon1 = [
 var pros1 = [
       {
             id: 1,
-            ten: 'pizza'
-
+            ten: 'pizza',
+            hinh: '1601628112386.jpg'
 
       },
       {
             id: 2,
             ten: 'bugger',
-
+            hinh: '1601628112386.jpg'
       },
       {
             id: 3,
             ten: 'pho',
-
+            hinh: '1601628112386.jpg'
       }
 ]
 // view engine setup
@@ -179,8 +179,8 @@ router.post("/insertProduct", (req, res) => {
             maxFileSize: 2000 * 1024 * 1024,
             keepExtensions: true,
             multiples: true,
-        })
-            .on('fileBegin', function(filename, file) {
+      })
+            .on('fileBegin', function (filename, file) {
                   console.log(filename);
                   file.path = path.join("D:/Exmaple01/Exmaple01/public", dateTimeName);
                   console.log(file.path);
@@ -192,19 +192,61 @@ router.post("/insertProduct", (req, res) => {
             .on('error', (err) => { console.log(err); res.sendStatus(400); return; })
             .on('end', () => console.log('end'))
             .parse(req, (err, fields, files) => {
+
+
                   console.log(fields);
+
                   mon1.push({
                         hinh: dateTimeName,
                         id: fields.MaMonAn,
                         idloai: fields.MaLoaiMonAn,
                         ten: fields.TenMon,
                         gia: fields.GiaMonAn,
-                       
+
+                  });
+
+
+            });
+
+      res.redirect(200, '/product');
+});
+
+router.post("/insertLoaiProduct", (req, res) => {
+      console.log(req.body);
+      // console.log('aa');
+      const dateTimeName1 = Date.now() + '.jpg';
+
+      new formidable.IncomingForm({
+            hash: 'md5',
+            maxFileSize: 2000 * 1024 * 1024,
+            keepExtensions: true,
+            multiples: true,
+      })
+            .on('fileBegin', function (filename, file) {
+                  console.log(filename);
+                  file.path = path.join("D:/Exmaple01/Exmaple01/public", dateTimeName1);
+                  console.log(file.path);
+            })
+            .on('file', async function (name, file) {
+                  console.log(name);
+            })
+            .on('aborted', (pros1) => { console.log('aborted'); })
+            .on('error', (err) => { console.log(err); res.sendStatus(400); return; })
+            .on('end', () => console.log('end'))
+            .parse(req, (err, fields, files) => {
+                  console.log(fields);
+                  pros1.push({
+                        hinh: dateTimeName1,
+                        id: fields.MaLoaiMonAn,
+                        ten: fields.TenLoaiMon,
+
+
                   })
             });
 
-            res.redirect(200, '/product');
+      res.redirect(200, '/loaiproduct');
 });
+
 
 app.use('/', router);
 
