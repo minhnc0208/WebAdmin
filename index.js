@@ -214,6 +214,47 @@ router.post("/insertProduct", (req, res) => {
       res.redirect(200, '/product');
 });
 
+// router.post("/updateProduct", (req, res) => {
+//       console.log(req.body);
+//       // console.log('aa');
+//       const dateTimeName = Date.now() + '.jpg';
+
+//       new formidable.IncomingForm({
+//             hash: 'md5',
+//             maxFileSize: 2000 * 1024 * 1024,
+//             keepExtensions: true,
+//             multiples: true,
+//       })
+//             .on('fileBegin', function (filename, file) {
+//                   console.log(filename);
+//                   file.path = path.join("D:/Exmaple01/Exmaple01/public", dateTimeName);
+//                   console.log(file.path);
+//             })
+//             .on('file', async function (name, file) {
+//                   console.log(name);
+//             })
+//             .on('aborted', (mon1) => { console.log('aborted'); })
+//             .on('error', (err) => { console.log(err); res.sendStatus(400); return; })
+//             .on('end', () => console.log('end'))
+//             .parse(req, (err, fields, files) => {
+
+
+//                   console.log(fields);
+
+//                   mon1.update({
+//                         hinh: dateTimeName,
+//                         id: fields.MaMonAn,
+//                         idloai: fields.MaLoaiMonAn,
+//                         ten: fields.TenMon,
+//                         gia: fields.GiaMonAn,
+
+//                   });
+
+
+//             });
+
+//       res.redirect(200, '/product');
+// });
 
 
 router.post("/insertLoaiProduct", (req, res) => {
