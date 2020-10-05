@@ -134,7 +134,7 @@
                         <td>
                             <span class="table-edit"></span>
                             <button type="button" style="width: 5rem; " class="btn btn-primary btn-rounded btn-sm my-0 "
-                                onclick="location.href='/edituser/'">Sửa</button>
+                                onclick="location.href='/edituser/<%= item.username %>'">Sửa</button>
                             </span>
                         </td>
                         <td>
@@ -215,7 +215,7 @@
                         <input type="file" name="myImage" accept="image/*">
 
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Thêm</button>
+                            <button type="submit " class="btn btn-primary">Thêm</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                         </div>
                     </form>

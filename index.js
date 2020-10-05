@@ -53,7 +53,7 @@ var users1 = [
       },
       {
             hinh: '1601621017314.jpg',
-            ten: 'minhlunscs',
+            ten: 'minhne',
             username: 'minhlunscs',
             password: 123,
             sodienthoai: '0357980104',
@@ -160,8 +160,13 @@ router.get('/loaiproduct', function (request, response) {
 router.get('/product', function (request, response) {
       response.render('product', { mon1: mon1 });
 });
-router.get('/edituser', function (request, response) {
-      response.render('edituser');
+router.get('/edituser/:username', function (request, response) {
+      const khachhang = users1.find(f => f.username == request.params.username);
+
+      // console.log(khachhang);
+
+
+      response.render('edituser',{ userCanUpdate: khachhang});
 });
 router.get('/editmonan/:id', function (request, response) {
       const monan = mon1.find(f => f.id == request.params.id);
@@ -169,11 +174,18 @@ router.get('/editmonan/:id', function (request, response) {
       // console.log(monan);
       response.render('editmonan', { monanCanUpdate: monan } );
 });
-router.get('/editloaimonan', function (request, response) {
-      response.render('editloaimonan');
+router.get('/editloaimonan/:id', function (request, response) {
+      const loaimonan = pros1.find(f => f.id == request.params.id);
+      
+       //console.log(loaimonan);
+
+      response.render('editloaimonan', {loaimonanCanUpdate:loaimonan } );
 });
-router.get('/edithoadon', function (request, response) {
-      response.render('edithoadon');
+router.get('/edithoadon/:id', function (request, response) {
+
+      const hoadon = hoadon1.find(f => f.id == request.params.id);
+
+      response.render('edithoadon', {hoadonCanUpdate: hoadon} );
 });
 router.post("/insertProduct", (req, res) => {
       console.log(req.body);
@@ -295,6 +307,47 @@ router.post("/insertLoaiProduct", (req, res) => {
       res.redirect(200, '/loaiproduct');
 });
 
+router.post("/updateLoaiProduct", (req, res) => {
+      const dateTimeName1 = Date.now() + '.jpg';
+
+      new formidable.IncomingForm({
+            hash: 'md5',
+            maxFileSize: 2000 * 1024 * 1024,
+            keepExtensions: true,
+            multiples: true,
+      })
+            .on('fileBegin', function (filename, file) {
+                  console.log(filename);
+                  file.path = path.join("D:/Exmaple01/Exmaple01/public", dateTimeName1);
+                  console.log(file.path);
+            })
+            .on('file', async function (name, file) {
+                  console.log(name);
+            })
+            .on('aborted', (pros1) => { console.log('aborted'); })
+            .on('error', (err) => { console.log(err); res.sendStatus(400); return; })
+            .on('end', () => console.log('end'))
+            .parse(req, (err, fields, files) => {
+
+                  const loaimonanCanUpdateIndex = pros1.findIndex(f => f.id == fields.MaLoaiMonAn);
+                  pros1.splice(loaimonanCanUpdateIndex, 1);
+
+                  pros1.push({
+                        hinh: dateTimeName1,
+                        id: fields.MaLoaiMonAn,
+                        ten: fields.TenLoaiMonAn,
+                        
+                  });
+                
+
+                  pros1.sort(function (a,b){
+                        return a.id - b.id;
+                  });  
+            });
+
+      res.redirect(200, '/product');
+});
+
 
 router.post("/insertUser", (req, res) => {
       console.log(req.body);
@@ -336,6 +389,52 @@ router.post("/insertUser", (req, res) => {
 });
 
 
+router.post("/updateUser", (req, res) => {
+      const dateTimeName2 = Date.now() + '.jpg';
+
+      new formidable.IncomingForm({
+            hash: 'md5',
+            maxFileSize: 2000 * 1024 * 1024,
+            keepExtensions: true,
+            multiples: true,
+      })
+            .on('fileBegin', function (filename, file) {
+                  console.log(filename);
+                  file.path = path.join("D:/Exmaple01/Exmaple01/public", dateTimeName2);
+                  console.log(file.path);
+            })
+            .on('file', async function (name, file) {
+                  console.log(name);
+            })
+            .on('aborted', (users1) => { console.log('aborted'); })
+            .on('error', (err) => { console.log(err); res.sendStatus(400); return; })
+            .on('end', () => console.log('end'))
+            .parse(req, (err, fields, files) => {
+                  
+                  console.log(fields);
+                  const userCanUpdateIndex = users1.findIndex(f => f.username == fields.TenDangNhap);
+                  users1.splice(userCanUpdateIndex, 1);
+
+                  users1.push({
+                        hinh: dateTimeName2,
+                        
+                        ten: fields.TenKhachHang,
+                        username:fields.TenDangNhap,
+                        password: fields.MatKhau,
+                        sodienthoai: fields.SoDienThoai,
+                        quyensudung: fields.QuyenSuDung,
+                        
+                  });
+            
+
+                  users1.sort(function (a,b){
+                        return a.id - b.id;
+                  });  
+            });
+
+      res.redirect(200, '/user');
+});
+
 router.post("/insertHoaDon", (req, res) => {
       console.log(req.body);
       // console.log('aa');
@@ -372,7 +471,46 @@ router.post("/insertHoaDon", (req, res) => {
 
       res.redirect(200, '/hoadon');
 });
+router.post("/updateHoaDon", (req, res) => {
+      const dateTimeName3 = Date.now() + '.jpg';
 
+      new formidable.IncomingForm({
+            hash: 'md5',
+            maxFileSize: 2000 * 1024 * 1024,
+            keepExtensions: true,
+            multiples: true,
+      })
+            .on('fileBegin', function (filename, file) {
+                  console.log(filename);
+                  file.path = path.join("D:/Exmaple01/Exmaple01/public", dateTimeName3);
+                  console.log(file.path);
+            })
+            .on('file', async function (name, file) {
+                  console.log(name);
+            })
+            .on('aborted', (hoadon1) => { console.log('aborted'); })
+            .on('error', (err) => { console.log(err); res.sendStatus(400); return; })
+            .on('end', () => console.log('end'))
+            .parse(req, (err, fields, files) => {
+
+                  const hoadonCanUpdateIndex = hoadon1.findIndex(f => f.username == fields.MaHoaDon);
+                  hoadon1.splice(hoadonCanUpdateIndex, 1);
+
+                  hoadon1.push({
+                        hinh: dateTimeName3,
+                        id: fields.MaHoaDon,
+                        tonggia:fields.TongGia,
+                        
+                        
+                  });
+                
+                  hoadon1.sort(function (a,b){
+                        return a.id - b.id;
+                  });  
+            });
+
+      res.redirect(200, '/hoadon');
+});
 app.use('/', router);
 
 app.use('/css', express.static(__dirname + '/css'));
