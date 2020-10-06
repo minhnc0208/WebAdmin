@@ -18,8 +18,22 @@ firebase.initializeApp({
 
 //connect firebase
 var db = firebase.database();
+var food = db.ref("Food");
 
+// food.once('value',function(snap)
+//   {
+//     console.log({"food":snap.val()});
+//   }
+// );
 
+async function getAllFoods() {
+  return await food.once('value', function (snap) {
+    const temp = snap.val();
+    return temp;
+  });
+};
+
+// console.log(getAllFoods().then(data => console.log(data.val())));
 
 // //router
 var path = require("path");
@@ -162,8 +176,12 @@ router.get("/loaiproduct", function (request, response) {
   response.render("loaiproduct", { pros1: pros1 });
 });
 
-router.get("/product", function (request, response) {
-  response.render("product", { mon1: mon1 });
+router.get("/product", async function (request, response) {
+  // await getAllFoods().then(data => console.log(data.val()));
+  await getAllFoods().then(data => {
+    console.log(Object.values(data.val()));
+    response.render("product", { mon1: Object.values(data.val()) });
+  });
 });
 
 router.get("/edituser/:username", function (request, response) {
@@ -181,8 +199,8 @@ router.get("/deleteuser/:username", function (request, response) {
   response.render("deleteuser", { userCanDelete: khachhang });
 });
 
-router.get("/editmonan/:id", function (request, response) {
-  const monan = mon1.find((f) => f.id == request.params.id);
+router.get("/editmonan/:foodid", function (request, response) {
+  const monan = mon1.find((f) => f.foodid == request.params.foodid);
 
   // console.log(monan);
   response.render("editmonan", { monanCanUpdate: monan });
@@ -769,7 +787,9 @@ router.post("/deleteHoaDon", (req, res) => {
 
 
 //// Lấy IP theo máy tính
+
 var os = require('os');
+
 var ifaces = os.networkInterfaces();
 
 Object.keys(ifaces).forEach(function (ifname) {
@@ -791,8 +811,6 @@ Object.keys(ifaces).forEach(function (ifname) {
         ++alias;
     });
 });
-
-
 
 app.use("/", router);
 
