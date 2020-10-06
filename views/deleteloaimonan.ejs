@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User</title>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="../css/car.css">
+
+
+
+    <!-- DataTables link -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+
+
+
+    <div class="container-fluid header-web">
+        <a href="/">
+
+        </a>
+    </div>
+
+
+    <div class="body-web">
+        <div class="menuVertical vertical-menu">
+            <div class="py-4 px-3 bg-light">
+                <div class="media d-flex align-items-center">
+                    <img src="https://res.cloudinary.com/mhmd/image/upload/v1556074849/avatar-1_tcnd60.png" alt="..."
+                        width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+                    <div class="media-body">
+                        <h4 class="m-0">Admin</h4>
+                        <p class="font-weight-light text-muted mb-0"> Nguyễn Cao Minh</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <ul class="nav flex-column">
+
+                <div class="classHome">
+                    <i class="fab fa-themeco"></i>
+                    <a class=" active-column " href="/">Trang Chủ</a>
+                </div>
+                <li class="nav-item">
+
+                    <a class="nav-link" href="/product">Món ăn</a>
+                </li>
+                <li class="nav-item">
+
+                    <a class="nav-link" href="/loaiproduct">Loại món ăn</a>
+                </li>
+                <div class="classHome">
+                    <i class="fas fa-users "></i>
+                    <p class=" active-column " href="#">Khách hàng</p>
+                </div>
+                <li class="nav-item">
+                    <i class="fas fa-user-tie icon-blue"></i>
+                    <a class="nav-link" href="/user">User</a>
+                </li>
+
+                <li class="nav-item">
+                    <i class="fas fa-user-tie icon-blue"></i>
+                    <a class="nav-link" href="/hoadon">Hóa đơn</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <div class="contents">
+            <div class="contents-title">
+                <h2>Xoá thông tin món ăn</h2>
+               
+            </div>
+
+
+
+            <!-- display modal edit information user -->
+
+            <form action="/deleteLoaiProduct" method="POST" autocomplete="off" enctype="multipart/form-data" style="margin: 0 20px;">
+                
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Mã món ăn:</label>
+                    <input type="text" class="form-control" id="recipient-name" name="MaMonAn" value="<%= loaimonanCanDelete.id %>">
+                </div>
+             
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Tên món ăn:</label>
+                    <input type="text" class="form-control" id="recipient-name" name="TenMon" value="<%= loaimonanCanDelete.ten %>">
+                </div>
+
+                
+
+
+                <!-- <form method="post" enctype="multipart/form-data" action="/uploadphoto"> -->
+                <!-- <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Ảnh món ăn:</label>
+                <br>
+                <br>
+                <input type="file" name="myImageEdit" value="monanCanDelete.hinh"> -->
+
+                <!-- <input type="submit" value="Upload Photo"> -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" onclick="location.href='/loaiproduct'">Xóa</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        onclick="location.href='/product'">Hủy</button>
+                </div>
+
+               
+            </form>
+        </div>
+
+
+    </div>
+
+
+</body>
+
+<!-- icon fontawesome -->
+<script src="https://kit.fontawesome.com/a1aabf7538.js" crossorigin="anonymous"></script>
+
+<!-- link script -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+
+
+
+
+</html>
