@@ -157,12 +157,15 @@ router.get("/user", function (request, response) {
 router.get("/hoadon", function (request, response) {
   response.render("hoadon", { hoadon1: hoadon1 });
 });
+
 router.get("/loaiproduct", function (request, response) {
   response.render("loaiproduct", { pros1: pros1 });
 });
+
 router.get("/product", function (request, response) {
   response.render("product", { mon1: mon1 });
 });
+
 router.get("/edituser/:username", function (request, response) {
   const khachhang = users1.find((f) => f.username == request.params.username);
 
@@ -170,12 +173,14 @@ router.get("/edituser/:username", function (request, response) {
 
   response.render("edituser", { userCanUpdate: khachhang });
 });
+
 router.get("/deleteuser/:username", function (request, response) {
   const khachhang = users1.find((f) => f.username == request.params.username);
 
   // console.log(monan);
   response.render("deleteuser", { userCanDelete: khachhang });
 });
+
 router.get("/editmonan/:id", function (request, response) {
   const monan = mon1.find((f) => f.id == request.params.id);
 
@@ -189,6 +194,7 @@ router.get("/deletemonan/:id", function (request, response) {
   // console.log(monan);
   response.render("deletemonan", { monanCanDelete: monan });
 });
+
 router.get("/editloaimonan/:id", function (request, response) {
   const loaimonan = pros1.find((f) => f.id == request.params.id);
 
@@ -196,23 +202,27 @@ router.get("/editloaimonan/:id", function (request, response) {
 
   response.render("editloaimonan", { loaimonanCanUpdate: loaimonan });
 });
+
 router.get("/deleteloaimonan/:id", function (request, response) {
   const loaimonan = pros1.find((f) => f.id == request.params.id);
 
   // console.log(monan);
   response.render("deleteloaimonan", { loaimonanCanDelete: loaimonan });
 });
+
 router.get("/edithoadon/:id", function (request, response) {
   const hoadon = hoadon1.find((f) => f.id == request.params.id);
 
   response.render("edithoadon", { hoadonCanUpdate: hoadon });
 });
+
 router.get("/deletehoadon/:id", function (request, response) {
   const hoadon = hoadon1.find((f) => f.id == request.params.id);
 
   // console.log(monan);
   response.render("deletehoadon", { hoadonCanDelete: hoadon });
 });
+
 router.post("/insertProduct", (req, res) => {
   console.log(req.body);
   // console.log('aa');
