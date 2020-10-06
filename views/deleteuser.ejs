@@ -81,7 +81,7 @@
 
         <div class="contents">
             <div class="contents-title">
-                <h2>Xoá thông tin loại món ăn</h2>
+                <h2>Xoá thông tin khách hàng</h2>
                
             </div>
 
@@ -89,20 +89,34 @@
 
             <!-- display modal edit information user -->
 
-            <form action="/deleteLoaiProduct" method="POST" autocomplete="off" enctype="multipart/form-data" style="margin: 0 20px;">
+            <form action="/deleteUser" method="POST" autocomplete="off" enctype="multipart/form-data" style="margin: 0 20px;">
                 
                 <div class="form-group">
-                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Mã loại món ăn:</label>
-                    <input type="text" class="form-control" id="recipient-name" name="MaMonAn" value="<%= loaimonanCanDelete.id %>">
+                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Tên khách hàng:</label>
+                    <input type="text" class="form-control" id="recipient-name" name="TenKhachHang" value="<%= userCanDelete.ten %>">
                 </div>
-             
                 <div class="form-group">
-                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Loại món ăn:</label>
-                    <input type="text" class="form-control" id="recipient-name" name="TenMon" value="<%= loaimonanCanDelete.ten %>">
+                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;">Tên đăng nhập:</label>
+                    <input type="text" class="form-control" id="recipient-name" name="TenDangNhap" value="<%= userCanDelete.username %>">
+                </div>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Mật khẩu:</label>
+                    <input type="text" class="form-control" id="recipient-name" name="MatKhau" value="<%= userCanDelete.password %>">
                 </div>
 
-                
-
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Số điện thoại:</label>
+                    <input type="text" class="form-control" id="recipient-name" name="SoDienThoai" value="<%= userCanDelete.sodienthoai %>">
+                </div>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Quyền sử dụng:</label>
+                    <!-- <input type="text" class="form-control" id="recipient-name" name="password"
+                        value=""> -->
+                        <select class="form-control form-control-sm" name="QuyenSuDung" value="<%= userCanDelete.quyensudung %>"> 
+                            <option value="Admin">Admin</option>
+                            <option value="User">User</option>
+                        </select>
+                </div>
 
                 <!-- <form method="post" enctype="multipart/form-data" action="/uploadphoto"> -->
                 <!-- <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Ảnh món ăn:</label>
@@ -112,7 +126,7 @@
 
                 <!-- <input type="submit" value="Upload Photo"> -->
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" onclick="location.href='/loaiproduct'">Xóa</button>
+                    <button type="submit" class="btn btn-primary" onclick="location.href='/product'">Xóa</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
                         onclick="location.href='/product'">Hủy</button>
                 </div>

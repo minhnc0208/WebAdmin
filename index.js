@@ -151,6 +151,12 @@ router.get("/edituser/:username", function (request, response) {
 
   response.render("edituser", { userCanUpdate: khachhang });
 });
+router.get("/deleteuser/:username", function (request, response) {
+  const khachhang = users1.find((f) => f.username == request.params.username);
+
+  // console.log(monan);
+  response.render("deleteuser", { userCanDelete: khachhang });
+});
 router.get("/editmonan/:id", function (request, response) {
   const monan = mon1.find((f) => f.id == request.params.id);
 
@@ -172,11 +178,11 @@ router.get("/editloaimonan/:id", function (request, response) {
   response.render("editloaimonan", { loaimonanCanUpdate: loaimonan });
 });
 router.get("/deleteloaimonan/:id", function (request, response) {
-      const loaimonan = pros1.find((f) => f.id == request.params.id);
-    
-      // console.log(monan);
-      response.render("deleteloaimonan", { loaimonanCanDelete: loaimonan });
-    });
+  const loaimonan = pros1.find((f) => f.id == request.params.id);
+
+  // console.log(monan);
+  response.render("deleteloaimonan", { loaimonanCanDelete: loaimonan });
+});
 router.get("/edithoadon/:id", function (request, response) {
   const hoadon = hoadon1.find((f) => f.id == request.params.id);
 
@@ -309,7 +315,6 @@ router.post("/deleteProduct", (req, res) => {
         fields.dateTimeName)
       ];
 
-      
       mon1.sort(function (a, b) {
         return a.id - b.id;
       });
@@ -317,9 +322,6 @@ router.post("/deleteProduct", (req, res) => {
 
   res.redirect(200, "/product");
 });
-
-
-
 
 router.post("/insertLoaiProduct", (req, res) => {
   console.log(req.body);
@@ -408,49 +410,48 @@ router.post("/updateLoaiProduct", (req, res) => {
 });
 
 router.post("/deleteLoaiProduct", (req, res) => {
-      const dateTimeName1 = Date.now() + ".jpg";
-    
-      new formidable.IncomingForm({
-        hash: "md5",
-        maxFileSize: 2000 * 1024 * 1024,
-        keepExtensions: true,
-        multiples: true,
-      })
-        .on("fileBegin", function (filename, file) {
-          console.log(filename);
-          file.path = path.join("D:/Exmaple01/Exmaple01/public", dateTimeName1);
-          console.log(file.path);
-        })
-        .on("file", async function (name, file) {
-          console.log(name);
-        })
-        .on("aborted", (pros1) => {
-          console.log("aborted");
-        })
-        .on("error", (err) => {
-          console.log(err);
-          res.sendStatus(400);
-          return;
-        })
-        .on("end", () => console.log("end"))
-        .parse(req, (err, fields, files) => {
-          const monanCanUpdateIndex = pros1.findIndex((f) => f.id == fields.MaMonAn);
-          pros1.splice(monanCanUpdateIndex, 1);
-    
-          delete pros1[
-            (fields.MaLoaiMonAn,
-            fields.TenLoaiMonAn,
-            fields.dateTimeName1)
-          ];
-    
-          
-          mon1.sort(function (a, b) {
-            return a.id - b.id;
-          });
-        });
-    
-      res.redirect(200, "/product");
+  const dateTimeName1 = Date.now() + ".jpg";
+
+  new formidable.IncomingForm({
+    hash: "md5",
+    maxFileSize: 2000 * 1024 * 1024,
+    keepExtensions: true,
+    multiples: true,
+  })
+    .on("fileBegin", function (filename, file) {
+      console.log(filename);
+      file.path = path.join("D:/Exmaple01/Exmaple01/public", dateTimeName1);
+      console.log(file.path);
+    })
+    .on("file", async function (name, file) {
+      console.log(name);
+    })
+    .on("aborted", (pros1) => {
+      console.log("aborted");
+    })
+    .on("error", (err) => {
+      console.log(err);
+      res.sendStatus(400);
+      return;
+    })
+    .on("end", () => console.log("end"))
+    .parse(req, (err, fields, files) => {
+      const monanCanUpdateIndex = pros1.findIndex(
+        (f) => f.id == fields.MaMonAn
+      );
+      pros1.splice(monanCanUpdateIndex, 1);
+
+      delete pros1[
+        (fields.MaLoaiMonAn, fields.TenLoaiMonAn, fields.dateTimeName1)
+      ];
+
+      mon1.sort(function (a, b) {
+        return a.id - b.id;
+      });
     });
+
+  res.redirect(200, "/loaiproduct");
+});
 
 router.post("/insertUser", (req, res) => {
   console.log(req.body);
@@ -545,6 +546,54 @@ router.post("/updateUser", (req, res) => {
 
   res.redirect(200, "/user");
 });
+router.post("/deleteUser", (req, res) => {
+  const dateTimeName2 = Date.now() + ".jpg";
+
+  new formidable.IncomingForm({
+    hash: "md5",
+    maxFileSize: 2000 * 1024 * 1024,
+    keepExtensions: true,
+    multiples: true,
+  })
+    .on("fileBegin", function (filename, file) {
+      console.log(filename);
+      file.path = path.join("D:/Exmaple01/Exmaple01/public", dateTimeName2);
+      console.log(file.path);
+    })
+    .on("file", async function (name, file) {
+      console.log(name);
+    })
+    .on("aborted", (users1) => {
+      console.log("aborted");
+    })
+    .on("error", (err) => {
+      console.log(err);
+      res.sendStatus(400);
+      return;
+    })
+    .on("end", () => console.log("end"))
+    .parse(req, (err, fields, files) => {
+      const userCanDelete = users1.findIndex(
+        (f) => f.username == fields.TenDangNhap
+      );
+      users1.splice(userCanDelete, 1);
+
+      delete users1[
+        (fields.TenKhachHang,
+        fields.TenDangNhap,
+        fields.MatKhau,
+        fields.SoDienThoai,
+        fields.QuyenSuDung,
+        fields.dateTimeName2)
+      ];
+
+      users1.sort(function (a, b) {
+        return a.id - b.id;
+      });
+    });
+
+  res.redirect(200, "/user");
+});
 
 router.post("/insertHoaDon", (req, res) => {
   console.log(req.body);
@@ -630,6 +679,7 @@ router.post("/updateHoaDon", (req, res) => {
 
   res.redirect(200, "/hoadon");
 });
+
 app.use("/", router);
 
 app.use("/css", express.static(__dirname + "/css"));
