@@ -93,12 +93,12 @@
                 
                 <div class="form-group">
                     <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Mã loại món ăn:</label>
-                    <input type="text" class="form-control" id="recipient-name" name="MaMonAn" value="<%= loaimonanCanDelete.id %>">
+                    <input type="text" class="form-control" id="recipient-name" name="MaMonAn" readonly="readonly" value="<%= loaimonanCanDelete.id %>">
                 </div>
              
                 <div class="form-group">
                     <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Loại món ăn:</label>
-                    <input type="text" class="form-control" id="recipient-name" name="TenMon" value="<%= loaimonanCanDelete.ten %>">
+                    <input type="text" class="form-control" id="recipient-name" name="TenMon" readonly="readonly" value="<%= loaimonanCanDelete.ten %>">
                 </div>
 
                 
@@ -114,7 +114,7 @@
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" onclick="location.href='/loaiproduct'">Xóa</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        onclick="location.href='/product'">Hủy</button>
+                        onclick="location.href='/loaiproduct'">Hủy</button>
                 </div>
 
                

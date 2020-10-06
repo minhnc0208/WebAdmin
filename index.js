@@ -5,6 +5,22 @@ const formidable = require("formidable");
 app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
 app.use(bodyParser.json()); // support json encoded bodies
 const router = express();
+
+//firebase
+var firebase = require("firebase-admin");
+
+var serviceAccount = require("./serviceFirebase.json");
+
+firebase.initializeApp({
+  credential: firebase.credential.cert(serviceAccount),
+  databaseURL: "https://pr0112-duan1.firebaseio.com"
+});
+
+//connect firebase
+var db = firebase.database();
+
+
+
 // //router
 var path = require("path");
 const { Router } = require("express");
@@ -190,6 +206,12 @@ router.get("/edithoadon/:id", function (request, response) {
   const hoadon = hoadon1.find((f) => f.id == request.params.id);
 
   response.render("edithoadon", { hoadonCanUpdate: hoadon });
+});
+router.get("/deletehoadon/:id", function (request, response) {
+  const hoadon = hoadon1.find((f) => f.id == request.params.id);
+
+  // console.log(monan);
+  response.render("deletehoadon", { hoadonCanDelete: hoadon });
 });
 router.post("/insertProduct", (req, res) => {
   console.log(req.body);
@@ -686,6 +708,52 @@ router.post("/updateHoaDon", (req, res) => {
   res.redirect(200, "/hoadon");
 });
 
+router.post("/deleteHoaDon", (req, res) => {
+  const dateTimeName3 = Date.now() + ".jpg";
+
+  new formidable.IncomingForm({
+    hash: "md5",
+    maxFileSize: 2000 * 1024 * 1024,
+    keepExtensions: true,
+    multiples: true,
+  })
+    .on("fileBegin", function (filename, file) {
+      console.log(filename);
+      file.path = path.join("D:/Exmaple01/Exmaple01/public", dateTimeName3);
+      console.log(file.path);
+    })
+    .on("file", async function (name, file) {
+      console.log(name);
+    })
+    .on("aborted", (hoadon1) => {
+      console.log("aborted");
+    })
+    .on("error", (err) => {
+      console.log(err);
+      res.sendStatus(400);
+      return;
+    })
+    .on("end", () => console.log("end"))
+    .parse(req, (err, fields, files) => {
+      const hoadonCanDelete = hoadon1.findIndex(
+        (f) => f.id == fields.MaHoaDon
+      );
+      hoadon1.splice(hoadonCanDelete, 1);
+
+      delete hoadon1[
+        (fields.MaHoaDon,
+        fields.TongGia,
+        fields.dateTimeName3)
+      ];
+      
+
+      hoadon1.sort(function (a, b) {
+        return a.id - b.id;
+      });
+    });
+
+  res.redirect(200, "/hoadon");
+});
 app.use("/", router);
 
 app.use("/css", express.static(__dirname + "/css"));
