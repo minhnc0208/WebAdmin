@@ -583,6 +583,7 @@ router.post("/updateUser", (req, res) => {
 
   res.redirect(200, "/user");
 });
+
 router.post("/deleteUser", (req, res) => {
   const dateTimeName2 = Date.now() + ".jpg";
 
@@ -672,6 +673,7 @@ router.post("/insertHoaDon", (req, res) => {
 
   res.redirect(200, "/hoadon");
 });
+
 router.post("/updateHoaDon", (req, res) => {
   const dateTimeName3 = Date.now() + ".jpg";
 

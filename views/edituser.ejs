@@ -120,10 +120,10 @@
                 <div class="form-group">
                     <label for="recipient-name" class="col-form-label"> Giới tính:</label>
                     <!-- <input type="text" class="form-control" id="recipient-name" name="email"> -->
-                    <select class="form-control form-control-sm" name="GioiTinh">
-                        <option value="Nam">Nam</option>
-                        <option value="Nữ">Nữ</option>
-                        <option value="Khác">Khác</option>
+                    <select class="form-control form-control-sm" name="GioiTinh" value="<%= userCanUpdate.gioitinh %>">
+                        <option value="Nam" value="<%= userCanUpdate.gioitinh %>">Nam</option>
+                        <option value="Nữ" value="<%= userCanUpdate.gioitinh %>">Nữ</option>
+                        <option value="Khác" value="<%= userCanUpdate.gioitinh %>">Khác</option>
 
                     </select>
                 </div>
