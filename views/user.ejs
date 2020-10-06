@@ -105,6 +105,7 @@
                         <th>Tên đăng nhập</th>
                         <th>Mật khẩu</th>
                         <th>Số điện thoại</th>
+                        <th>Giới tính</th>
                         <th>Quyền sử dụng</th>
                         <th>Sửa</th>
                         <th>Xóa</th>
@@ -128,6 +129,7 @@
                         <td class="tcenter"><%= item.username %></td>
                         <td class="tcenter"><%= item.password %></td>
                         <td class="tcenter"><%= item.sodienthoai %></td>
+                        <td class="tcenter"><%= item.gioitinh %></td>
                         <td class="tcenter"><%= item.quyensudung %></td>
 
 
@@ -200,7 +202,16 @@
                             <label for="message-text" class="col-form-label"> Số điện thoại:</label>
                             <textarea class="form-control" id="message-text" name="SoDienThoai"></textarea>
                         </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label"> Giới tính:</label>
+                            <!-- <input type="text" class="form-control" id="recipient-name" name="email"> -->
+                            <select class="form-control form-control-sm" name="GioiTinh">
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
+                                <option value="Khác">Khác</option>
 
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label"> Quyền sử dụng:</label>
                             <!-- <input type="text" class="form-control" id="recipient-name" name="email"> -->

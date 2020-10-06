@@ -40,6 +40,7 @@ var users1 = [
     username: "minhlun",
     password: 123,
     sodienthoai: "0357980104",
+    gioitinh:"Nam",
     quyensudung: "Admin",
   },
   {
@@ -48,6 +49,7 @@ var users1 = [
     username: "anhhung",
     password: 123,
     sodienthoai: "09121855855",
+    gioitinh:"Nam",
     quyensudung: "Admin",
   },
   {
@@ -56,6 +58,7 @@ var users1 = [
     username: "minhlunscs",
     password: 123,
     sodienthoai: "0357980104",
+    gioitinh:"Nam",
     quyensudung: "User",
   },
 ];
@@ -489,6 +492,7 @@ router.post("/insertUser", (req, res) => {
         username: fields.TenDangNhap,
         password: fields.MatKhau,
         sodienthoai: fields.SoDienThoai,
+        gioitinh: fields.GioiTinh,
         quyensudung: fields.QuyenSuDung,
       });
     });
@@ -536,6 +540,7 @@ router.post("/updateUser", (req, res) => {
         username: fields.TenDangNhap,
         password: fields.MatKhau,
         sodienthoai: fields.SoDienThoai,
+        gioitinh: fields.GioiTinh,
         quyensudung: fields.QuyenSuDung,
       });
 
@@ -583,6 +588,7 @@ router.post("/deleteUser", (req, res) => {
         fields.TenDangNhap,
         fields.MatKhau,
         fields.SoDienThoai,
+        fields.GioiTinh,
         fields.QuyenSuDung,
         fields.dateTimeName2)
       ];
