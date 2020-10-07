@@ -13,12 +13,11 @@ var serviceAccount = require("./serviceFirebase.json");
 
 firebase.initializeApp({
   credential: firebase.credential.cert(serviceAccount),
-  databaseURL: "https://pr0112-duan1.firebaseio.com"
+  databaseURL: "https://pr0112-duan1.firebaseio.com",
 });
 
 //connect firebase
 var db = firebase.database();
-
 
 var food = db.ref("Food");
 
@@ -36,37 +35,37 @@ var hoadonchitiet = db.ref("Bill/foods");
 // );
 
 async function getAllFoods() {
-  return await food.once('value', function (snap) {
+  return await food.once("value", function (snap) {
     const temp = snap.val();
     return temp;
   });
-};
+}
 
-async function getAllCateFood(){
-  return await cate.once('value', function(snap){
+async function getAllCateFood() {
+  return await cate.once("value", function (snap) {
     const temp1 = snap.val();
     return temp1;
-  })
+  });
 }
 
-async function getAllUser(){
-  return await user.once('value', function(snap) {
+async function getAllUser() {
+  return await user.once("value", function (snap) {
     const temp2 = snap.val();
     return temp2;
-  })
+  });
 }
 
-async function getAllHoaDon(){
-  return await hoadon.once('value',function(snap){
+async function getAllHoaDon() {
+  return await hoadon.once("value", function (snap) {
     const temp3 = snap.val();
     return temp3;
-  })
+  });
 }
 
-async function getAllHoaDonChiTiet(bill_id){
-  var hoaDonChiTiet = (await hoadon.once('value')).val();
+async function getAllHoaDonChiTiet(bill_id) {
+  var hoaDonChiTiet = (await hoadon.once("value")).val();
   // console.log('bb', hoaDonChiTiet[bill_id]);
-  
+
   return hoaDonChiTiet[bill_id];
 }
 
@@ -110,7 +109,7 @@ var users1 = [
     username: "minhlun",
     password: 123,
     sodienthoai: "0357980104",
-    gioitinh:"Nam",
+    gioitinh: "Nam",
     quyensudung: "Admin",
   },
   {
@@ -119,7 +118,7 @@ var users1 = [
     username: "anhhung",
     password: 123,
     sodienthoai: "09121855855",
-    gioitinh:"Nam",
+    gioitinh: "Nam",
     quyensudung: "Admin",
   },
   {
@@ -128,7 +127,7 @@ var users1 = [
     username: "minhlunscs",
     password: 123,
     sodienthoai: "0357980104",
-    gioitinh:"Nam",
+    gioitinh: "Nam",
     quyensudung: "User",
   },
 ];
@@ -155,26 +154,25 @@ var hoadonchitiet1 = [
   {
     hinh: "1601631747036.jpg",
     billid: 1,
-    id:1,
-    foodname:"buggeer",
-    quantity:2,
+    id: 1,
+    foodname: "buggeer",
+    quantity: 2,
     tonggia: 200000,
-    
   },
   {
     hinh: "1601631747036.jpg",
     billid: 2,
-    id:2,
-    foodname:"PHO",
-    quantity:2,
+    id: 2,
+    foodname: "PHO",
+    quantity: 2,
     tonggia: 200000,
   },
   {
     hinh: "1601631747036.jpg",
-    billid:3,
-    id:3,
-    foodname:"dui ga",
-    quantity:2,
+    billid: 3,
+    id: 3,
+    foodname: "dui ga",
+    quantity: 2,
     tonggia: 200000,
   },
 ];
@@ -196,6 +194,7 @@ var pros1 = [
     hinh: "1601628112386.jpg",
   },
 ];
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -231,18 +230,19 @@ router.get("/users", function (request, response) {
 router.get("/about", function (request, response) {
   response.render("about");
 });
-router.get("/hoadonchitiet/:bill_id", function (request, response) {
 
+router.get("/hoadonchitiet/:bill_id", function (request, response) {
   const billId = request.params.bill_id;
 
-  getAllHoaDonChiTiet(billId).then(data =>{
+  getAllHoaDonChiTiet(billId).then((data) => {
     console.log(data);
 
-    response.render("hoadonchitiet",{hoadonchitiet1: data}); 
-  })
+    response.render("hoadonchitiet", { hoadonchitiet1: data });
+  });
 });
+
 router.get("/user", function (request, response) {
-  getAllUser().then(data =>{
+  getAllUser().then((data) => {
     console.log(Object.values(data.val()));
 
     response.render("user", { users1: Object.values(data.val()) });
@@ -250,15 +250,15 @@ router.get("/user", function (request, response) {
 });
 
 router.get("/hoadon", function (request, response) {
-  getAllHoaDon().then(data =>{
+  getAllHoaDon().then((data) => {
     console.log(Object.values(data.val()));
 
     response.render("hoadon", { hoadon1: Object.values(data.val()) });
-  })
+  });
 });
 
 router.get("/loaiproduct", function (request, response) {
-   getAllCateFood().then(data =>{
+  getAllCateFood().then((data) => {
     console.log(Object.values(data.val()));
 
     response.render("loaiproduct", { pros1: Object.values(data.val()) });
@@ -267,7 +267,7 @@ router.get("/loaiproduct", function (request, response) {
 
 router.get("/product", async function (request, response) {
   // await getAllFoods().then(data => console.log(data.val()));
-  await getAllFoods().then(data => {
+  await getAllFoods().then((data) => {
     console.log(Object.values(data.val()));
     response.render("product", { mon1: Object.values(data.val()) });
   });
@@ -289,10 +289,21 @@ router.get("/deleteuser/:username", function (request, response) {
 });
 
 router.get("/editmonan/:foodid", function (request, response) {
-  const monan = mon1.find((f) => f.foodid == request.params.foodid);
+  getAllFoods().then(data => {
+    const allfoods = data.val();
+    const food = Object.values(allfoods).find(f => f.foodid == request.params.foodid);
+    console.log(food);
+    if (food === undefined) {
+      response.render("about");
+      return;
+    }
+    response.render("editmonan", { monanCanUpdate: food });
+  });
+
+  // 
 
   // console.log(monan);
-  response.render("editmonan", { monanCanUpdate: monan });
+  // 
 });
 
 router.get("/deletemonan/:id", function (request, response) {
@@ -363,10 +374,10 @@ router.post("/insertProduct", (req, res) => {
 
       mon1.push({
         hinh: dateTimeName,
-        id: fields.MaMonAn,
-        idloai: fields.MaLoaiMonAn,
-        ten: fields.TenMon,
-        gia: fields.GiaMonAn,
+        foodid: fields.MaMonAn,
+        categorid: fields.MaLoaiMonAn,
+        foodname: fields.TenMon,
+        price: fields.GiaMonAn,
       });
     });
 
@@ -400,20 +411,45 @@ router.post("/updateProduct", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-      const monanCanUpdateIndex = mon1.findIndex((f) => f.foodid == fields.MaMonAn);
-      mon1.splice(monanCanUpdateIndex, 1);
+     
 
-      mon1.push({
-        hinh: dateTimeName,
-        foodid: fields.MaMonAn,
-        categorid: fields.MaLoaiMonAn,
-        foodname: fields.TenMon,
-        price: fields.GiaMonAn,
+      getAllFoods().then(data => {
+        const allfoods = data.val();
+        const foodLocal = Object.entries(allfoods).filter((f) => { 
+          // console.log(f[1].foodid);
+          return f[1].foodid == fields.MaMonAn;
+        });
+        console.log(foodLocal);
+        if (foodLocal.length == 0) {
+          res.render("about");
+          return;
+        }
+        var ref = food.child(foodLocal[0][0]);
+        ref.update({
+          'price': fields.GiaMonAn,
+          'foodname': fields.TenMon,
+          
+        });
+        res.render("editmonan", { monanCanUpdate: foodLocal[0] });
       });
+      
+      // const monanCanUpdateIndex = mon1.findIndex(
+      //   (f) => f.foodid == fields.MaMonAn
+      // );
 
-      mon1.sort(function (a, b) {
-        return a.foodid - b.foodid;
-      });
+      // mon1.splice(monanCanUpdateIndex, 1);
+
+      // mon1.push({
+      //   hinh: dateTimeName,
+      //   foodid: fields.MaMonAn,
+      //   categorid: fields.MaLoaiMonAn,
+      //   foodname: fields.TenMon,
+      //   price: fields.GiaMonAn,
+      // });
+
+      // mon1.sort(function (a, b) {
+      //   return a.foodid - b.foodid;
+      // });
     });
 
   res.redirect(200, "/product");
@@ -854,17 +890,10 @@ router.post("/deleteHoaDon", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-      const hoadonCanDelete = hoadon1.findIndex(
-        (f) => f.id == fields.MaHoaDon
-      );
+      const hoadonCanDelete = hoadon1.findIndex((f) => f.id == fields.MaHoaDon);
       hoadon1.splice(hoadonCanDelete, 1);
 
-      delete hoadon1[
-        (fields.MaHoaDon,
-        fields.TongGia,
-        fields.dateTimeName3)
-      ];
-      
+      delete hoadon1[(fields.MaHoaDon, fields.TongGia, fields.dateTimeName3)];
 
       hoadon1.sort(function (a, b) {
         return a.id - b.id;
@@ -874,31 +903,30 @@ router.post("/deleteHoaDon", (req, res) => {
   res.redirect(200, "/hoadon");
 });
 
-
 //// Lấy IP theo máy tính
 
-var os = require('os');
+var os = require("os");
 
 var ifaces = os.networkInterfaces();
 
 Object.keys(ifaces).forEach(function (ifname) {
-    var alias = 0;
+  var alias = 0;
 
-    ifaces[ifname].forEach(function (iface) {
-        if ('IPv4' !== iface.family || iface.internal !== false) {
-            // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
-            return;
-        }
+  ifaces[ifname].forEach(function (iface) {
+    if ("IPv4" !== iface.family || iface.internal !== false) {
+      // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
+      return;
+    }
 
-        if (alias >= 1) {
-            // this single interface has multiple ipv4 addresses
-            console.log(ifname + ':' + alias, iface.address);
-        } else {
-            // this interface has only one ipv4 adress
-            console.log(ifname, iface.address);
-        }
-        ++alias;
-    });
+    if (alias >= 1) {
+      // this single interface has multiple ipv4 addresses
+      console.log(ifname + ":" + alias, iface.address);
+    } else {
+      // this interface has only one ipv4 adress
+      console.log(ifname, iface.address);
+    }
+    ++alias;
+  });
 });
 
 app.use("/", router);

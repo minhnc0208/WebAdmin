@@ -78,10 +78,7 @@
                     <i class="fas fa-user-tie icon-blue"></i>
                     <a class="nav-link" href="/hoadon">Hóa đơn</a>
                 </li>
-                <li class="nav-item">
-                    <i class="fas fa-user-tie icon-blue"></i>
-                    <a class="nav-link" href="/hoadonchitiet">Hóa đơn chi tiết</a>
-                </li>
+                
             </ul>
 
         </div>
@@ -115,6 +112,7 @@
                         <th>Tên khách hàng</th>
                         <th>Sửa</th>
                         <th>Xóa</th>
+                        <th>Chọn</th>
                         <!-- <th>Age</th>
                         <th>Start date</th>
                         <th>Salary</th> -->
@@ -156,7 +154,16 @@
                                     >Xóa</button>
                             </span>
                         </td>
+                        <td class="tcenter">
+                            <span class="table-edit">
+                               
 
+                                <button type="button" style="width: 5rem; "
+                                    class="btn btn-primary btn-rounded btn-sm my-0 "
+                                    onclick="location.href='/hoadonchitiet/<%= item.billid %>'"
+                                    >Chọn</button>
+                            </span>
+                        </td>
                     </tr>
                     <% }); %>
 
