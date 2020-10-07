@@ -125,23 +125,23 @@
 
                             <img src="<%= item.hinh %>" alt="" style="width: 100%; height: 8rem;">
                         </td>
-                        <td class="tcenter"><%= item.ten %></td>
-                        <td class="tcenter"><%= item.username %></td>
+                        <td class="tcenter"><%= item.fullname %></td>
+                        <td class="tcenter"><%= item.usname %></td>
                         <td class="tcenter"><%= item.password %></td>
-                        <td class="tcenter"><%= item.sodienthoai %></td>
-                        <td class="tcenter"><%= item.gioitinh %></td>
-                        <td class="tcenter"><%= item.quyensudung %></td>
+                        <td class="tcenter"><%= item.phone %></td>
+                        <td class="tcenter"><%= item.gender %></td>
+                        <td class="tcenter"><%= item.ruler %></td>
 
 
                         <td>
                             <span class="table-edit"></span>
                             <button type="button" style="width: 5rem; " class="btn btn-primary btn-rounded btn-sm my-0 "
-                                onclick="location.href='/edituser/<%= item.username %>'">Sửa</button>
+                                onclick="location.href='/edituser/<%= item.usname %>'">Sửa</button>
                             </span>
                         </td>
                         <td>
                             <span class="table-remove">
-                                <button type="button" style="width: 5rem; " onclick="location.href='/deleteuser/<%= item.username %>'"
+                                <button type="button" style="width: 5rem; " onclick="location.href='/deleteuser/<%= item.usname %>'"
                                     class="btn btn-danger btn-rounded btn-sm my-0 ">Xóa</button>
                             </span>
                         </td>

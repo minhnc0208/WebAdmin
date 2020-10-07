@@ -103,9 +103,13 @@
 
                 <thead>
                     <tr>
-                        <th>Ảnh hóa đơn</th>
                         <th>Mã hóa đơn</th>
+                        <th>Ngày tạo hóa đơn</th>
+                        <th>Địa chỉ</th>
+                        <th>Phương thức thanh toán</th>
+                        <th>Trạng thái</th>
                         <th>Tổng giá</th>
+                        <th>Tên khách hàng</th>
                         <th>Sửa</th>
                         <th>Xóa</th>
                         <!-- <th>Age</th>
@@ -118,19 +122,26 @@
                 <tbody>
                     <% hoadon1.forEach(function(item){ %>
                     <tr>
-                        <td style="width: 20%;">
+                        <!-- <td style="width: 20%;">
                             <img src="<%= item.hinh %>" alt=""  style="width: 100%; height: 8rem;"  > 
                      
-                         </td>
-                        <td class="tcenter"><%= item.id %></td>
-                        <td class="tcenter"><%= item.tonggia %></td>
+                         </td> -->
+                         <td class="tcenter"><%= item.billid %></td>
+                         <td class="tcenter"><%= item.date %></td>
+                         <td class="tcenter"><%= item.address %></td>
+                         <td class="tcenter"><%= item.payments %></td>
+                         <td class="tcenter"><%= item.state %></td>
+                         <td class="tcenter"><%= item.total %></td>
+                         <td class="tcenter"><%= item.username %></td>
+
+
                         <td class="tcenter">
                             <span class="table-edit">
                                
 
                                 <button type="button" style="width: 5rem; "
                                     class="btn btn-primary btn-rounded btn-sm my-0 "
-                                    onclick="location.href='/edithoadon/<%= item.id %>'"
+                                    onclick="location.href='/edithoadon/<%= item.billid %>'"
                                     >Sửa</button>
                             </span>
                         </td>
@@ -138,7 +149,7 @@
                             <span class="table-remove">
                                 <button type="button" style="width: 5rem; "
                                     class="btn btn-danger btn-rounded btn-sm my-0 "
-                                    onclick="location.href='/deletehoadon/<%= item.id %>'"
+                                    onclick="location.href='/deletehoadon/<%= item.billid %>'"
                                     >Xóa</button>
                             </span>
                         </td>

@@ -18,8 +18,15 @@ firebase.initializeApp({
 
 //connect firebase
 var db = firebase.database();
+
+
 var food = db.ref("Food");
 
+var cate = db.ref("Category");
+
+var user = db.ref("User");
+
+var hoadon = db.ref("Bill");
 // food.once('value',function(snap)
 //   {
 //     console.log({"food":snap.val()});
@@ -32,6 +39,28 @@ async function getAllFoods() {
     return temp;
   });
 };
+
+async function getAllCateFood(){
+  return await cate.once('value', function(snap){
+    const temp1 = snap.val();
+    return temp1;
+  })
+}
+
+async function getAllUser(){
+  return await user.once('value', function(snap) {
+    const temp2 = snap.val();
+    return temp2;
+  })
+}
+
+async function getAllHoaDon(){
+  return await hoadon.once('value',function(snap){
+    const temp3 = snap.val();
+    return temp3;
+  })
+}
+
 
 // console.log(getAllFoods().then(data => console.log(data.val())));
 
@@ -165,15 +194,27 @@ router.get("/about", function (request, response) {
 });
 
 router.get("/user", function (request, response) {
-  response.render("user", { users1: users1 });
+  getAllUser().then(data =>{
+    console.log(Object.values(data.val()));
+
+    response.render("user", { users1: Object.values(data.val()) });
+  });
 });
 
 router.get("/hoadon", function (request, response) {
-  response.render("hoadon", { hoadon1: hoadon1 });
+  getAllHoaDon().then(data =>{
+    console.log(Object.values(data.val()));
+
+    response.render("hoadon", { hoadon1: Object.values(data.val()) });
+  })
 });
 
 router.get("/loaiproduct", function (request, response) {
-  response.render("loaiproduct", { pros1: pros1 });
+   getAllCateFood().then(data =>{
+    console.log(Object.values(data.val()));
+
+    response.render("loaiproduct", { pros1: Object.values(data.val()) });
+  });
 });
 
 router.get("/product", async function (request, response) {
@@ -311,19 +352,19 @@ router.post("/updateProduct", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-      const monanCanUpdateIndex = mon1.findIndex((f) => f.id == fields.MaMonAn);
+      const monanCanUpdateIndex = mon1.findIndex((f) => f.foodid == fields.MaMonAn);
       mon1.splice(monanCanUpdateIndex, 1);
 
       mon1.push({
         hinh: dateTimeName,
-        id: fields.MaMonAn,
-        idloai: fields.MaLoaiMonAn,
-        ten: fields.TenMon,
-        gia: fields.GiaMonAn,
+        foodid: fields.MaMonAn,
+        categorid: fields.MaLoaiMonAn,
+        foodname: fields.TenMon,
+        price: fields.GiaMonAn,
       });
 
       mon1.sort(function (a, b) {
-        return a.id - b.id;
+        return a.foodid - b.foodid;
       });
     });
 
