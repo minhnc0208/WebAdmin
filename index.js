@@ -27,6 +27,8 @@ var cate = db.ref("Category");
 var user = db.ref("User");
 
 var hoadon = db.ref("Bill");
+
+var hoadonchitiet = db.ref("Bill/foods");
 // food.once('value',function(snap)
 //   {
 //     console.log({"food":snap.val()});
@@ -61,7 +63,16 @@ async function getAllHoaDon(){
   })
 }
 
+async function getAllHoaDonChiTiet(bill_id){
+  var hoaDonChiTiet = (await hoadon.once('value')).val();
+  // console.log('bb', hoaDonChiTiet[bill_id]);
+  
+  return hoaDonChiTiet[bill_id];
+}
 
+// var a = await getAllHoaDonChiTiet('1590829888816');
+// console.log('aa:', a);
+// console.log(a);
 // console.log(getAllFoods().then(data => console.log(data.val())));
 
 // //router
@@ -140,6 +151,34 @@ var hoadon1 = [
   },
 ];
 
+var hoadonchitiet1 = [
+  {
+    hinh: "1601631747036.jpg",
+    billid: 1,
+    id:1,
+    foodname:"buggeer",
+    quantity:2,
+    tonggia: 200000,
+    
+  },
+  {
+    hinh: "1601631747036.jpg",
+    billid: 2,
+    id:2,
+    foodname:"PHO",
+    quantity:2,
+    tonggia: 200000,
+  },
+  {
+    hinh: "1601631747036.jpg",
+    billid:3,
+    id:3,
+    foodname:"dui ga",
+    quantity:2,
+    tonggia: 200000,
+  },
+];
+
 var pros1 = [
   {
     id: 1,
@@ -192,7 +231,16 @@ router.get("/users", function (request, response) {
 router.get("/about", function (request, response) {
   response.render("about");
 });
+router.get("/hoadonchitiet/:bill_id", function (request, response) {
 
+  const billId = request.params.bill_id;
+
+  getAllHoaDonChiTiet(billId).then(data =>{
+    console.log(data);
+
+    response.render("hoadonchitiet",{hoadonchitiet1: data}); 
+  })
+});
 router.get("/user", function (request, response) {
   getAllUser().then(data =>{
     console.log(Object.values(data.val()));
