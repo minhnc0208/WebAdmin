@@ -345,10 +345,18 @@ router.get("/deleteloaimonan/:id", function (request, response) {
   response.render("deleteloaimonan", { loaimonanCanDelete: loaimonan });
 });
 
-router.get("/edithoadon/:id", function (request, response) {
-  const hoadon = hoadon1.find((f) => f.id == request.params.id);
+router.get("/edithoadon/:billid", function (request, response) {
 
-  response.render("edithoadon", { hoadonCanUpdate: hoadon });
+  getAllHoaDon().then(data => {
+    const allhoadons = data.val();
+    const hoadon = Object.values(allhoadons).find(f => f.billid == request.params.billid);
+    console.log(hoadon);
+    if(hoadon === undefined){
+      response.render("about");
+      return;
+    }
+    response.render("edithoadon",{hoadonCanUpdate: hoadon });
+  })
 });
 
 router.get("/deletehoadon/:id", function (request, response) {
@@ -859,19 +867,29 @@ router.post("/updateHoaDon", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-      const hoadonCanUpdateIndex = hoadon1.findIndex(
-        (f) => f.username == fields.MaHoaDon
-      );
-      hoadon1.splice(hoadonCanUpdateIndex, 1);
 
-      hoadon1.push({
-        hinh: dateTimeName3,
-        id: fields.MaHoaDon,
-        tonggia: fields.TongGia,
-      });
-
-      hoadon1.sort(function (a, b) {
-        return a.id - b.id;
+      getAllHoaDon().then(data => {
+        const allhoadons = data.val();
+        const hoadonLocal = Object.entries(allhoadons).filter((f) => { 
+          // console.log(f[1].foodid);
+          return f[1].billid == fields.MaHoaDon;
+        });
+        console.log(hoadonLocal);
+        if (hoadonLocal.length == 0) {
+          res.render("about");
+          return;
+        }
+        var ref = hoadon.child(hoadonLocal[0][0]);
+        ref.update({
+          'date':fields.NgayTao,
+          'address': fields.DiaChi,
+          'payments':fields.ThanhToan,
+          'state': fields.TrangThai,
+          'total': fields.TongGia,
+          'username': fields.TenDangNhap,
+          
+        });
+        res.render("edithoadon", { hoadonCanUpdate: hoadonLocal[0] });
       });
     });
 
