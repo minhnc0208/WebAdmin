@@ -280,7 +280,7 @@ router.get("/edituser/:usname", function (request, response) {
     console.log(user);
 
     if(user === undefined){
-      response.render("about");
+      response.render("error");
     }
     response.render("edituser",{userCanUpdate: user });
   })
@@ -304,7 +304,7 @@ router.get("/editmonan/:foodid", function (request, response) {
     const food = Object.values(allfoods).find(f => f.foodid == request.params.foodid);
     console.log(food);
     if (food === undefined) {
-      response.render("about");
+      response.render("error");
       return;
     }
     response.render("editmonan", { monanCanUpdate: food });
@@ -329,7 +329,7 @@ router.get("/editloaimonan/:categoryid", function (request, response) {
     const catefood = Object.values(allcatefoods).find(f => f.categoryid == request.params.categoryid);
     console.log(catefood);
     if(catefood === undefined){
-      response.render("about");
+      response.render("error");
       return;
     }
     response.render("editloaimonan",{loaimonanCanUpdate: catefood});
@@ -352,7 +352,7 @@ router.get("/edithoadon/:billid", function (request, response) {
     const hoadon = Object.values(allhoadons).find(f => f.billid == request.params.billid);
     console.log(hoadon);
     if(hoadon === undefined){
-      response.render("about");
+      response.render("error");
       return;
     }
     response.render("edithoadon",{hoadonCanUpdate: hoadon });

@@ -1,82 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Login V1</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--===============================================================================================-->
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Log in</title>
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../vendor/bootstrap/css/bootstrap.min.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../fonts/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"
+    />
+    <!--===============================================================================================-->
 
-  <link rel="icon" type="image/png" href="https://static.thenounproject.com/png/689826-200.png" sizes="32x32">
-
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-
-  <link rel="stylesheet" href="../css/login.css">
-
-
-  <!-- link fontGoogle -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
-
-  <!-- script -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-    </script>
-
-
-</head>
-
-<body>
-  <div class=" container-login">
-    <div class="header">
-
-    </div>
-
-    <div class="titleLogin">
-      Đăng nhập với tư cách Admin
-    </div>
-
-    <div class="form-login">
-
-      <!-- method: là cách truyền dữ liệu đi ( ở đây là post)  -->
-
-      <!-- action là cái trang sẽ chuyển về trang car khi mà mình bấm submit -->
-
-
-
-      <div class="form-group">
-
-        <label for="exampleInputUserName">Tên đăng nhập</label>
-
-        <input type="text" class="form-control" id="exampleInputText" aria-describedby="textHelp" name="usernameAdmin">
-
-
+    <link rel="stylesheet" type="text/css" href="../css/login.css" />
+    <!--===============================================================================================-->
+  </head>
+  <body>
+    <body>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+              <div class="card-body">
+                <h5 class="card-title text-center">Sign In</h5>
+                <form class="form-signin">
+                  <div class="form-label-group">
+                    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                    <label for="inputEmail">Email address</label>
+                  </div>
+    
+                  <div class="form-label-group">
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                    <label for="inputPassword">Password</label>
+                  </div>
+    
+                  <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1">Remember password</label>
+                  </div>
+                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+                  <hr class="my-4">
+                  <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button>
+                  <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div class="form-group">
-
-        <label for="exampleInputPassword1">Mật khẩu</label>
-
-        <input type="password" class="form-control" id="exampleInputPassword" name="passwordAdmin">
-
-      </div>
-
-
-
-
-
-      <input type="submit" class="btn btn-primary btn-Login" value="Đăng nhập" />
-
-
-
-
-    </div>
-
-
-  </div>
-
-
-
-</body>
-
+    </body>
+  </body>
 </html>

@@ -106,11 +106,17 @@
                 </div>
                 <div class="form-group">
                     <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Phương thức thanh toán:</label>
-                    <input type="text" class="form-control" id="recipient-name" name="ThanhToan"  readonly="readonly" value="<%= hoadonCanUpdate.payments %>">
+                    <select class="form-control form-control-sm"  name="ThanhToan"  value="<%= hoadonCanUpdate.payments %>">
+                        <option  value="PAYAL">Thẻ tín dụng</option>
+                        <option  value="CASH ON DELIVERY">Tiền mặt</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Trạng thái:</label>
-                    <input type="text" class="form-control" id="recipient-name" name="TrangThai" value="<%= hoadonCanUpdate.state %>">
+                    <select class="form-control form-control-sm"  name="TrangThai" value="<%= hoadonCanUpdate.state %>">
+                        <option  value="Pending">Đang chờ</option>
+                        <option  value="Approved">Thành công</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Tổng giá:</label>
@@ -121,11 +127,11 @@
                     <input type="text" class="form-control" id="recipient-name" name="TenDangNhap" readonly="readonly" value="<%= hoadonCanUpdate.username %>">
                 </div>
                 <!-- <form method="post" enctype="multipart/form-data" action="/uploadphoto"> -->
-                <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Ảnh hóa đơn:</label>
+                <!-- <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Ảnh hóa đơn:</label> -->
                 <br>
                 <br>
                 
-                <input type="file" name="myImageEdit" accept="image/*">
+                <!-- <input type="file" name="myImageEdit" accept="image/*"> -->
 
                 <!-- <input type="submit" value="Upload Photo"> -->
                 <div class="modal-footer">
