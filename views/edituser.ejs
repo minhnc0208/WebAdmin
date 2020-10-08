@@ -96,12 +96,12 @@
              
                 <div class="form-group">
                     <label for="recipient-name" class="col-form-label" style="font-weight: bold;">  Tên khách hàng:</label>
-                    <input type="text" class="form-control" id="recipient-name" name="TenKhachHang" value="<%= userCanUpdate.ten %>">
+                    <input type="text" class="form-control" id="recipient-name" name="TenKhachHang" value="<%= userCanUpdate.fullname %>">
                 </div>
 
                 <div class="form-group">
                     <label for="recipient-name" class="col-form-label" style="font-weight: bold;">  Tên đăng nhập:</label>
-                    <input type="text" class="form-control" id="recipient-name" name="TenDangNhap" value="<%= userCanUpdate.username %>">
+                    <input type="text" class="form-control" id="recipient-name" name="TenDangNhap" readonly="readonly" value="<%= userCanUpdate.usname %>">
                 </div>
 
                 <div class="form-group">
@@ -114,16 +114,16 @@
                 <div class="form-group">
                     <label for="message-text" class="col-form-label" style="font-weight: bold;">  Số điện thoại:</label>
                     <input type="text" class="form-control" id="recipient-name" name="SoDienThoai"
-                    value="<%= userCanUpdate.sodienthoai %>">
+                    value="<%= userCanUpdate.phone %>">
                     <!-- <input type="text" class="form-control" id="recipient-name" name="information" value=""> -->
                 </div>
                 <div class="form-group">
                     <label for="recipient-name" class="col-form-label"> Giới tính:</label>
                     <!-- <input type="text" class="form-control" id="recipient-name" name="email"> -->
-                    <select class="form-control form-control-sm" name="GioiTinh" value="<%= userCanUpdate.gioitinh %>">
-                        <option value="Nam" value="<%= userCanUpdate.gioitinh %>">Nam</option>
-                        <option value="Nữ" value="<%= userCanUpdate.gioitinh %>">Nữ</option>
-                        <option value="Khác" value="<%= userCanUpdate.gioitinh %>">Khác</option>
+                    <select class="form-control form-control-sm" name="GioiTinh" value="<%= userCanUpdate.gender %>">
+                        <option value="Nam" value="Nam">Nam</option>
+                        <option value="Nữ" value="Nữ">Nữ</option>
+                        <option value="Khác" value="Khác">Khác</option>
 
                     </select>
                 </div>
@@ -131,7 +131,7 @@
                     <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Quyền sử dụng:</label>
                     <!-- <input type="text" class="form-control" id="recipient-name" name="password"
                         value=""> -->
-                        <select class="form-control form-control-sm" name="QuyenSuDung" value="<%= userCanUpdate.quyensudung %>"> 
+                        <select class="form-control form-control-sm" name="QuyenSuDung" value="<%= userCanUpdate.ruler %>"> 
                             <option value="Admin">Admin</option>
                             <option value="User">User</option>
                         </select>

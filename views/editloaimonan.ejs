@@ -93,6 +93,7 @@
               for="recipient-name"
               class="col-form-label"
               style="font-weight: bold"
+              
             >
               Mã loại món ăn:</label
             >
@@ -101,6 +102,7 @@
               class="form-control"
               id="recipient-name"
               name="MaLoaiMonAn"
+              readonly="readonly"
               value="<%= loaimonanCanUpdate.categoryid %>"
             />
           </div>
@@ -139,6 +141,7 @@
             <button
               type="submit"
               class="btn btn-primary"
+              onclick="location.href='/loaiproduct'"
             >
               Lưu
             </button>
