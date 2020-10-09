@@ -268,7 +268,6 @@ router.get("/loaiproduct", function (request, response) {
 router.get("/product", async function (request, response) {
   // await getAllFoods().then(data => console.log(data.val()));
 
-
   // var a = await getAllCateFood();
   // var b = await getAllFoods();
 
@@ -285,21 +284,18 @@ router.get("/product", async function (request, response) {
 });
 
 router.get("/edituser/:usname", function (request, response) {
-  getAllUser().then(data => {
+  getAllUser().then((data) => {
     const allusers = data.val();
-    const user = Object.values(allusers).find(f => f.usname == request.params.usname);
+    const user = Object.values(allusers).find(
+      (f) => f.usname == request.params.usname
+    );
     console.log(user);
 
-    if(user === undefined){
+    if (user === undefined) {
       response.render("error");
     }
-    response.render("edituser",{userCanUpdate: user });
-  })
-
-
-  
-
- 
+    response.render("edituser", { userCanUpdate: user });
+  });
 });
 
 router.get("/deleteuser/:username", function (request, response) {
@@ -310,9 +306,11 @@ router.get("/deleteuser/:username", function (request, response) {
 });
 
 router.get("/editmonan/:foodid", function (request, response) {
-  getAllFoods().then(data => {
+  getAllFoods().then((data) => {
     const allfoods = data.val();
-    const food = Object.values(allfoods).find(f => f.foodid == request.params.foodid);
+    const food = Object.values(allfoods).find(
+      (f) => f.foodid == request.params.foodid
+    );
     console.log(food);
     if (food === undefined) {
       response.render("error");
@@ -321,10 +319,10 @@ router.get("/editmonan/:foodid", function (request, response) {
     response.render("editmonan", { monanCanUpdate: food });
   });
 
-  // 
+  //
 
   // console.log(monan);
-  // 
+  //
 });
 
 router.get("/deletemonan/:id", function (request, response) {
@@ -335,39 +333,50 @@ router.get("/deletemonan/:id", function (request, response) {
 });
 
 router.get("/editloaimonan/:categoryid", function (request, response) {
-  getAllCateFood().then(data => {
+  getAllCateFood().then((data) => {
     const allcatefoods = data.val();
-    const catefood = Object.values(allcatefoods).find(f => f.categoryid == request.params.categoryid);
+    const catefood = Object.values(allcatefoods).find(
+      (f) => f.categoryid == request.params.categoryid
+    );
     console.log(catefood);
-    if(catefood === undefined){
+    if (catefood === undefined) {
       response.render("error");
       return;
     }
-    response.render("editloaimonan",{loaimonanCanUpdate: catefood});
-  
-  })
- 
+    response.render("editloaimonan", { loaimonanCanUpdate: catefood });
+  });
 });
 
-router.get("/deleteloaimonan/:id", function (request, response) {
-  const loaimonan = pros1.find((f) => f.id == request.params.id);
+router.get("/deleteloaimonan/:categoryid", function (request, response) {
+  getAllCateFood().then((data) => {
+    const allcatefoods = data.val();
+    const catefood = Object.values(allcatefoods).find(
+      (f) => f.categoryid == request.params.categoryid
+    );
 
-  // console.log(monan);
-  response.render("deleteloaimonan", { loaimonanCanDelete: loaimonan });
+    console.log(catefood);
+
+    if (catefood === undefined) {
+      response.render("error");
+      return;
+    }
+    response.render("deleteloaimonan", { loaimonanCanDelete: catefood });
+  });
 });
 
 router.get("/edithoadon/:billid", function (request, response) {
-
-  getAllHoaDon().then(data => {
+  getAllHoaDon().then((data) => {
     const allhoadons = data.val();
-    const hoadon = Object.values(allhoadons).find(f => f.billid == request.params.billid);
+    const hoadon = Object.values(allhoadons).find(
+      (f) => f.billid == request.params.billid
+    );
     console.log(hoadon);
-    if(hoadon === undefined){
+    if (hoadon === undefined) {
       response.render("error");
       return;
     }
-    response.render("edithoadon",{hoadonCanUpdate: hoadon });
-  })
+    response.render("edithoadon", { hoadonCanUpdate: hoadon });
+  });
 });
 
 router.get("/deletehoadon/:id", function (request, response) {
@@ -447,11 +456,9 @@ router.post("/updateProduct", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-     
-
-      getAllFoods().then(data => {
+      getAllFoods().then((data) => {
         const allfoods = data.val();
-        const foodLocal = Object.entries(allfoods).filter((f) => { 
+        const foodLocal = Object.entries(allfoods).filter((f) => {
           // console.log(f[1].foodid);
           return f[1].foodid == fields.MaMonAn;
         });
@@ -463,12 +470,10 @@ router.post("/updateProduct", (req, res) => {
         var ref = food.child(foodLocal[0][0]);
         ref.update({
           price: parseInt(fields.GiaMonAn),
-          'foodname': fields.TenMon,
-          
+          foodname: fields.TenMon,
         });
         res.render("editmonan", { monanCanUpdate: foodLocal[0] });
       });
-      
     });
 
   res.redirect(200, "/product");
@@ -587,10 +592,9 @@ router.post("/updateLoaiProduct", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-
-      getAllCateFood().then(data => {
+      getAllCateFood().then((data) => {
         const allcatefoods = data.val();
-        const catefoodLocal = Object.entries(allcatefoods).filter((f) => { 
+        const catefoodLocal = Object.entries(allcatefoods).filter((f) => {
           // console.log(f[1].foodid);
           return f[1].categoryid == fields.MaLoaiMonAn;
         });
@@ -601,23 +605,59 @@ router.post("/updateLoaiProduct", (req, res) => {
         }
         var ref = cate.child(catefoodLocal[0][0]);
         ref.update({
-          'categoryid:': fields.MaLoaiMonAn,
-          'name': fields.TenLoaiMonAn,
-          
+          "categoryid:": fields.MaLoaiMonAn,
+          name: fields.TenLoaiMonAn,
         });
         res.render("editloaimonan", { loaimonanCanUpdate: catefoodLocal[0] });
-
       });
-
     });
-    
-    
+
   res.redirect(200, "/loaiproduct");
 });
 
 router.post("/deleteLoaiProduct", (req, res) => {
-  const dateTimeName1 = Date.now() + ".jpg";
+  new formidable.IncomingForm({
+    hash: "md5",
+    maxFileSize: 2000 * 1024 * 1024,
+    keepExtensions: true,
+    multiples: true,
+  }).parse(req, (err, fields, files) => {
+    // console.log(fields);
 
+    const categoryId = fields.MaLoaiMonAn;
+    // var key = cate.childs();
+    cate.once("value").then(function (snapshot) {
+      let ok = false;
+      snapshot.forEach(function (childSnapshot) {
+        // console.log(childSnapshot.val().categoryid, '-', categoryId,childSnapshot.val().categoryid === categoryId)
+        if (childSnapshot.val().categoryid === categoryId) {
+          cate.child(childSnapshot.key).remove();
+          ok = true;
+          
+          return;
+        }
+        // // key will be "ada" the first time and "alan" the second time
+        // var key = childSnapshot.key;
+        // // childData will be the actual contents of the child
+        // var childData = childSnapshot.val();
+      });
+
+      if (ok)
+        res.status(200).redirect("loaiproduct");
+      else
+        res.render("error");
+    });
+  });
+  // console.log(req);
+
+  // console.log(key);
+  return;
+  cate
+    .remove(categoryId)
+    .then(() => {})
+    .catch((err) => {});
+
+  return;
   new formidable.IncomingForm({
     hash: "md5",
     maxFileSize: 2000 * 1024 * 1024,
@@ -642,21 +682,34 @@ router.post("/deleteLoaiProduct", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-      const monanCanUpdateIndex = pros1.findIndex(
-        (f) => f.id == fields.MaMonAn
-      );
-      pros1.splice(monanCanUpdateIndex, 1);
+      getAllCateFood().then((data) => {
+        const allcatefoods = data.val();
+        const catefoodLocal = Object.entries(allcatefoods).filter((f) => {
+          return (f[1].categoryid = fields.MaLoaiMonAn);
+        });
 
-      delete pros1[
-        (fields.MaLoaiMonAn, fields.TenLoaiMonAn, fields.dateTimeName1)
-      ];
-
-      mon1.sort(function (a, b) {
-        return a.id - b.id;
+        console.log(catefoodLocal);
+        if (catefoodLocal.length == 0) {
+          res.render("error");
+          return;
+        }
+        var ref = cate.child(catefoodLocal[0][0]);
+        delete ref[(fields.MaLoaiMonAn, fields.TenLoaiMonAn)];
       });
-    });
+      // const monanCanUpdateIndex = pros1.findIndex(
+      //   (f) => f.id == fields.MaMonAn
+      // );
+      // pros1.splice(monanCanUpdateIndex, 1);
 
-  res.redirect(200, "/loaiproduct");
+      // delete pros1[
+      //   (fields.MaLoaiMonAn, fields.TenLoaiMonAn, fields.dateTimeName1)
+      // ];
+
+      // mon1.sort(function (a, b) {
+      //   return a.id - b.id;
+      // });
+      res.render("deleteloaimonan", { loaimonanCanDelete: catefoodLocal[0] });
+    });
 });
 
 router.post("/insertUser", (req, res) => {
@@ -730,11 +783,9 @@ router.post("/updateUser", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-
-      getAllUser().then(data => {
+      getAllUser().then((data) => {
         const allusers = data.val();
-        const userLocal = Object.entries(allusers).filter((f) => { 
-       
+        const userLocal = Object.entries(allusers).filter((f) => {
           return f[1].usname == fields.TenDangNhap;
         });
         console.log(userLocal);
@@ -744,17 +795,13 @@ router.post("/updateUser", (req, res) => {
         }
         var ref = user.child(userLocal[0][0]);
         ref.update({
-          'fullname': fields.TenKhachHang,
-          'password':fields.MatKhau,
-          'phone': fields.SoDienThoai,
-          'gender': fields.GioiTinh,
-          'ruler': fields.QuyenSuDung,
-
-          
-          
+          fullname: fields.TenKhachHang,
+          password: fields.MatKhau,
+          phone: fields.SoDienThoai,
+          gender: fields.GioiTinh,
+          ruler: fields.QuyenSuDung,
         });
         res.render("edituser", { userCanUpdate: userLocal[0] });
-
       });
     });
 
@@ -878,10 +925,9 @@ router.post("/updateHoaDon", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-
-      getAllHoaDon().then(data => {
+      getAllHoaDon().then((data) => {
         const allhoadons = data.val();
-        const hoadonLocal = Object.entries(allhoadons).filter((f) => { 
+        const hoadonLocal = Object.entries(allhoadons).filter((f) => {
           // console.log(f[1].foodid);
           return f[1].billid == fields.MaHoaDon;
         });
@@ -892,13 +938,12 @@ router.post("/updateHoaDon", (req, res) => {
         }
         var ref = hoadon.child(hoadonLocal[0][0]);
         ref.update({
-          'date':fields.NgayTao,
-          'address': fields.DiaChi,
-          'payments':fields.ThanhToan,
-          'state': fields.TrangThai,
-          total:parseInt(fields.TongGia) ,
-          'username': fields.TenDangNhap,
-          
+          date: fields.NgayTao,
+          address: fields.DiaChi,
+          payments: fields.ThanhToan,
+          state: fields.TrangThai,
+          total: parseInt(fields.TongGia),
+          username: fields.TenDangNhap,
         });
         res.render("edithoadon", { hoadonCanUpdate: hoadonLocal[0] });
       });
