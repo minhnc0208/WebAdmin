@@ -267,6 +267,17 @@ router.get("/loaiproduct", function (request, response) {
 
 router.get("/product", async function (request, response) {
   // await getAllFoods().then(data => console.log(data.val()));
+
+
+  // var a = await getAllCateFood();
+  // var b = await getAllFoods();
+
+  // Promise.all([a,b]).then(values => {
+  //   var c = values.forEach(value => console.log(value.val()));
+  //   // console.log(c);
+  //   response.render("product", { mon1: Object.values(data.val()), category:  });
+  // })
+
   await getAllFoods().then((data) => {
     console.log(Object.values(data.val()));
     response.render("product", { mon1: Object.values(data.val()) });
@@ -451,7 +462,7 @@ router.post("/updateProduct", (req, res) => {
         }
         var ref = food.child(foodLocal[0][0]);
         ref.update({
-          'price': fields.GiaMonAn,
+          price: parseInt(fields.GiaMonAn),
           'foodname': fields.TenMon,
           
         });
@@ -885,7 +896,7 @@ router.post("/updateHoaDon", (req, res) => {
           'address': fields.DiaChi,
           'payments':fields.ThanhToan,
           'state': fields.TrangThai,
-          'total': fields.TongGia,
+          total:parseInt(fields.TongGia) ,
           'username': fields.TenDangNhap,
           
         });
