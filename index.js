@@ -298,11 +298,21 @@ router.get("/edituser/:usname", function (request, response) {
   });
 });
 
-router.get("/deleteuser/:username", function (request, response) {
-  const khachhang = users1.find((f) => f.username == request.params.username);
+router.get("/deleteuser/:usname", function (request, response) {
 
-  // console.log(monan);
-  response.render("deleteuser", { userCanDelete: khachhang });
+  getAllUser().then((data) => {
+    const allusers = data.val();
+    const user = Object.values(allusers).find(
+      (f) => f.usname == request.params.usname
+    );
+    console.log(user);
+    if(user === undefined){
+      response.render("error");
+      return;
+    }
+    response.render("deleteuser",{userCanDelete: user });
+  })
+
 });
 
 router.get("/editmonan/:foodid", function (request, response) {
@@ -636,10 +646,7 @@ router.post("/deleteLoaiProduct", (req, res) => {
           
           return;
         }
-        // // key will be "ada" the first time and "alan" the second time
-        // var key = childSnapshot.key;
-        // // childData will be the actual contents of the child
-        // var childData = childSnapshot.val();
+       
       });
 
       if (ok)
@@ -648,68 +655,7 @@ router.post("/deleteLoaiProduct", (req, res) => {
         res.render("error");
     });
   });
-  // console.log(req);
-
-  // console.log(key);
-  return;
-  cate
-    .remove(categoryId)
-    .then(() => {})
-    .catch((err) => {});
-
-  return;
-  new formidable.IncomingForm({
-    hash: "md5",
-    maxFileSize: 2000 * 1024 * 1024,
-    keepExtensions: true,
-    multiples: true,
-  })
-    .on("fileBegin", function (filename, file) {
-      console.log(filename);
-      file.path = path.join("D:/Exmaple01/Exmaple01/public", dateTimeName1);
-      console.log(file.path);
-    })
-    .on("file", async function (name, file) {
-      console.log(name);
-    })
-    .on("aborted", (pros1) => {
-      console.log("aborted");
-    })
-    .on("error", (err) => {
-      console.log(err);
-      res.sendStatus(400);
-      return;
-    })
-    .on("end", () => console.log("end"))
-    .parse(req, (err, fields, files) => {
-      getAllCateFood().then((data) => {
-        const allcatefoods = data.val();
-        const catefoodLocal = Object.entries(allcatefoods).filter((f) => {
-          return (f[1].categoryid = fields.MaLoaiMonAn);
-        });
-
-        console.log(catefoodLocal);
-        if (catefoodLocal.length == 0) {
-          res.render("error");
-          return;
-        }
-        var ref = cate.child(catefoodLocal[0][0]);
-        delete ref[(fields.MaLoaiMonAn, fields.TenLoaiMonAn)];
-      });
-      // const monanCanUpdateIndex = pros1.findIndex(
-      //   (f) => f.id == fields.MaMonAn
-      // );
-      // pros1.splice(monanCanUpdateIndex, 1);
-
-      // delete pros1[
-      //   (fields.MaLoaiMonAn, fields.TenLoaiMonAn, fields.dateTimeName1)
-      // ];
-
-      // mon1.sort(function (a, b) {
-      //   return a.id - b.id;
-      // });
-      res.render("deleteloaimonan", { loaimonanCanDelete: catefoodLocal[0] });
-    });
+  
 });
 
 router.post("/insertUser", (req, res) => {
@@ -835,27 +781,31 @@ router.post("/deleteUser", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-      const userCanDelete = users1.findIndex(
-        (f) => f.username == fields.TenDangNhap
-      );
-      users1.splice(userCanDelete, 1);
 
-      delete users1[
-        (fields.TenKhachHang,
-        fields.TenDangNhap,
-        fields.MatKhau,
-        fields.SoDienThoai,
-        fields.GioiTinh,
-        fields.QuyenSuDung,
-        fields.dateTimeName2)
-      ];
+      const userId = fields.TenDangNhap;
 
-      users1.sort(function (a, b) {
-        return a.id - b.id;
+      user.once("value").then(function(snapshot){
+        let ok = false;
+
+        snapshot.forEach(function(childSnapshot){
+          if(childSnapshot.val().usname === userId){
+            user.child(childSnapshot.key).remove();
+            ok = true;
+
+            return;
+          }
+
+        });
+
+        if(ok)
+          res.status(200).redirect("user");
+        else
+          res.render("error");
+
       });
+   
     });
 
-  res.redirect(200, "/user");
 });
 
 router.post("/insertHoaDon", (req, res) => {
