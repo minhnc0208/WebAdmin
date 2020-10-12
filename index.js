@@ -335,11 +335,23 @@ router.get("/editmonan/:foodid", function (request, response) {
   //
 });
 
-router.get("/deletemonan/:id", function (request, response) {
-  const monan = mon1.find((f) => f.id == request.params.id);
+router.get("/deletemonan/:foodid", function (request, response) {
 
-  // console.log(monan);
-  response.render("deletemonan", { monanCanDelete: monan });
+  getAllFoods().then((data) => {
+    const allfoods = data.val();
+    const food = Object.values(allfoods).find(
+      (f) => f.foodid == request.params.foodid
+    );
+    console.log(food);
+
+    if(food === undefined){
+      response.render("error");
+      return;
+    }
+    response.render("deletemonan",{monanCanDelete: food});
+  });
+
+ 
 });
 
 router.get("/editloaimonan/:categoryid", function (request, response) {
@@ -527,23 +539,27 @@ router.post("/deleteProduct", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-      const monanCanUpdateIndex = mon1.findIndex((f) => f.id == fields.MaMonAn);
-      mon1.splice(monanCanUpdateIndex, 1);
+        const foodId = fields.MaMonAn;
 
-      delete mon1[
-        (fields.MaMonAn,
-        fields.MaLoaiMonAn,
-        fields.TenMon,
-        fields.GiaMonAn,
-        fields.dateTimeName)
-      ];
+        food.once("value").then(function (snapshot){
+          let ok = false;
+          snapshot.forEach(function (childSnapshot){
+            if(childSnapshot.val().foodid === foodId){
+              food.child(childSnapshot.key).remove();
+              ok = true;
+              
+              return;
+            }
 
-      mon1.sort(function (a, b) {
-        return a.id - b.id;
-      });
+          });
+          if(ok)
+            res.status(200).redirect("product");
+          else
+            res.render("error");
+        });
     });
 
-  res.redirect(200, "/product");
+  
 });
 
 router.post("/insertLoaiProduct", (req, res) => {
