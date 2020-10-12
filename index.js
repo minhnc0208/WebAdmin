@@ -389,11 +389,22 @@ router.get("/edithoadon/:billid", function (request, response) {
   });
 });
 
-router.get("/deletehoadon/:id", function (request, response) {
-  const hoadon = hoadon1.find((f) => f.id == request.params.id);
+router.get("/deletehoadon/:billid", function (request, response) {
+  getAllHoaDon().then((data) => {
+    const allhoadons = data.val();
+    const hoadon = Object.values(allhoadons).find(
+      (f) => f.billid == request.params.billid
+    );
 
-  // console.log(monan);
-  response.render("deletehoadon", { hoadonCanDelete: hoadon });
+    console.log(hoadon);
+
+    if(hoadon === undefined){
+      response.render("error");
+      return;
+    }
+    response.render("deletehoadon",{ hoadonCanDelete: hoadon});
+  });
+
 });
 
 router.post("/insertProduct", (req, res) => {
@@ -929,17 +940,29 @@ router.post("/deleteHoaDon", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-      const hoadonCanDelete = hoadon1.findIndex((f) => f.id == fields.MaHoaDon);
-      hoadon1.splice(hoadonCanDelete, 1);
 
-      delete hoadon1[(fields.MaHoaDon, fields.TongGia, fields.dateTimeName3)];
+      const hoadonId = fields.MaHoaDon;
 
-      hoadon1.sort(function (a, b) {
-        return a.id - b.id;
+      hoadon.once("value").then(function (snapshot){
+        let ok = false;
+        snapshot.forEach(function (childSnapshot){
+          if(childSnapshot.val().billid === hoadonId){
+            hoadon.child(childSnapshot.key).remove();
+            ok = true;
+            return;
+          }
+
+        });
+
+        if(ok)
+          res.status(200).redirect("hoadon");
+        else
+          res.render("error");
       });
+     
     });
 
-  res.redirect(200, "/hoadon");
+ 
 });
 
 //// Lấy IP theo máy tính
