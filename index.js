@@ -2,23 +2,22 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const formidable = require("formidable");
-const googleStorage = require('@google-cloud/storage');
+const googleStorage = require("@google-cloud/storage");
 
-
-const uuid = require('uuid-v4');
-const Multer = require('multer');
+const uuid = require("uuid-v4");
+const Multer = require("multer");
 var config = {
-  projectId: 'pr0112-duan1',
-  keyFilename: './serviceFirebase.json'
+  projectId: "pr0112-duan1",
+  keyFilename: "./serviceFirebase.json",
 };
 
 // const storage = require('@google-cloud/storage')
-const { Storage } = require('@google-cloud/storage');
+const { Storage } = require("@google-cloud/storage");
 const gcs = new Storage({
-  projectId: 'pr0112-duan1',
-  keyFilename: './serviceFirebase.json'
-   });
-const bucket = gcs.bucket('pr0112-duan1.appspot.com');
+  projectId: "pr0112-duan1",
+  keyFilename: "./serviceFirebase.json",
+});
+const bucket = gcs.bucket("pr0112-duan1.appspot.com");
 
 app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
 app.use(bodyParser.json()); // support json encoded bodies
@@ -277,7 +276,7 @@ router.get("/hoadon", function (request, response) {
 
 router.get("/loaiproduct", function (request, response) {
   getAllCateFood().then((data) => {
-     console.log(Object.values(data.val()));
+    console.log(Object.values(data.val()));
 
     response.render("loaiproduct", { pros1: Object.values(data.val()) });
   });
@@ -317,20 +316,18 @@ router.get("/edituser/:usname", function (request, response) {
 });
 
 router.get("/deleteuser/:usname", function (request, response) {
-
   getAllUser().then((data) => {
     const allusers = data.val();
     const user = Object.values(allusers).find(
       (f) => f.usname == request.params.usname
     );
     console.log(user);
-    if(user === undefined){
+    if (user === undefined) {
       response.render("error");
       return;
     }
-    response.render("deleteuser",{userCanDelete: user });
-  })
-
+    response.render("deleteuser", { userCanDelete: user });
+  });
 });
 
 router.get("/editmonan/:foodid", function (request, response) {
@@ -354,7 +351,6 @@ router.get("/editmonan/:foodid", function (request, response) {
 });
 
 router.get("/deletemonan/:foodid", function (request, response) {
-
   getAllFoods().then((data) => {
     const allfoods = data.val();
     const food = Object.values(allfoods).find(
@@ -362,14 +358,12 @@ router.get("/deletemonan/:foodid", function (request, response) {
     );
     console.log(food);
 
-    if(food === undefined){
+    if (food === undefined) {
       response.render("error");
       return;
     }
-    response.render("deletemonan",{monanCanDelete: food});
+    response.render("deletemonan", { monanCanDelete: food });
   });
-
- 
 });
 
 router.get("/editloaimonan/:categoryid", function (request, response) {
@@ -428,13 +422,12 @@ router.get("/deletehoadon/:billid", function (request, response) {
 
     console.log(hoadon);
 
-    if(hoadon === undefined){
+    if (hoadon === undefined) {
       response.render("error");
       return;
     }
-    response.render("deletehoadon",{ hoadonCanDelete: hoadon});
+    response.render("deletehoadon", { hoadonCanDelete: hoadon });
   });
-
 });
 
 router.post("/insertProduct", (req, res) => {
@@ -557,27 +550,22 @@ router.post("/deleteProduct", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-        const foodId = fields.MaMonAn;
+      const foodId = fields.MaMonAn;
 
-        food.once("value").then(function (snapshot){
-          let ok = false;
-          snapshot.forEach(function (childSnapshot){
-            if(childSnapshot.val().foodid === foodId){
-              food.child(childSnapshot.key).remove();
-              ok = true;
-              
-              return;
-            }
+      food.once("value").then(function (snapshot) {
+        let ok = false;
+        snapshot.forEach(function (childSnapshot) {
+          if (childSnapshot.val().foodid === foodId) {
+            food.child(childSnapshot.key).remove();
+            ok = true;
 
-          });
-          if(ok)
-            res.status(200).redirect("product");
-          else
-            res.render("error");
+            return;
+          }
         });
+        if (ok) res.status(200).redirect("product");
+        else res.render("error");
+      });
     });
-
-  
 });
 
 router.post("/insertLoaiProduct", (req, res) => {
@@ -613,45 +601,55 @@ router.post("/insertLoaiProduct", (req, res) => {
       // Create a root reference
       // console.log(files.myImage.path);
       // return;
-      bucket.upload(files.myImage.path, {
-        public: true,
-        gzip: true,
-        metadata: {
-          firebaseStorageDownloadTokens: uuid(),
-          cacheControl: "public, max-age=31536000",
+      bucket.upload(
+        files.myImage.path,
+        {
+          public: true,
+          gzip: true,
+          metadata: {
+            firebaseStorageDownloadTokens: uuid(),
+            cacheControl: "public, max-age=31536000",
+          },
         },
-      }, (err, file, callback) => {
-        if (err)
-          console.log('loi 2');
+        (err, file, callback) => {
+          if (err) console.log("loi 2");
 
-        console.log(file.metadata);
-        cate.push().set({
-          'categoryid': fields.MaLoaiMonAn,
-          'name': fields.TenLoaiMonAn,
-          'image':file.metadata.mediaLink
-        }).then(result => {
-          const createPersistentDownloadUrl = (bucket, pathToFile, downloadToken) => {
-            return `https://firebasestorage.googleapis.com/v0/b/pr0112-duan1.appspot.com/o/${encodeURIComponent(
-              pathToFile
-            )}?alt=media&token=${downloadToken}`;
-          };
-  
-          console.log(createPersistentDownloadUrl);
-        }).catch(err => {
-          console.log('loi');
-        });
-        
-      });
-     // https://firebasestorage.googleapis.com/v0/b/<projectId>.appspot.com/o/image.jpg?alt=media&token=<token>
-    
-     //https://firebasestorage.googleapis.com/v0/b/pr0112-duan1.appspot.com/o/7up.jpg?alt=media&token=8391df25-1da1-483f-bfec-6546bacb5795
+          // console.log(file.metadata);
+          cate
+            .push()
+            .set({
+              categoryid: fields.MaLoaiMonAn,
+              name: fields.TenLoaiMonAn,
+              image: file.metadata.mediaLink,
+            })
+            .then((result) => {
+              const createPersistentDownloadUrl = (
+                bucket,
+                pathToFile,
+                downloadToken
+              ) => {
+                return `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${encodeURIComponent(
+                  pathToFile
+                )}?alt=media&token=${downloadToken}`;
+              };
+
+              console.log(createPersistentDownloadUrl);
+            })
+            .catch((err) => {
+              console.log("loi");
+            });
+        }
+      );
+      // https://firebasestorage.googleapis.com/v0/b/<projectId>.appspot.com/o/image.jpg?alt=media&token=<token>
+
+      //https://firebasestorage.googleapis.com/v0/b/pr0112-duan1.appspot.com/o/7up.jpg?alt=media&token=8391df25-1da1-483f-bfec-6546bacb5795
 
       // function createPublicFileURL(storageName){
       //   return `http://storage.googleapis.com/${bucket}/${encodeURIComponent(storageName)}`;
       // }
     });
 
-  res.redirect(200,"/loaiproduct");
+  res.redirect(200, "/loaiproduct");
 });
 
 router.post("/updateLoaiProduct", (req, res) => {
@@ -681,29 +679,45 @@ router.post("/updateLoaiProduct", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-      getAllCateFood().then((data) => {
-        const allcatefoods = data.val();
-        const catefoodLocal = Object.entries(allcatefoods).filter((f) => {
-          // console.log(f[1].foodid);
-          return f[1].categoryid == fields.MaLoaiMonAn;
-        });
-        console.log(catefoodLocal);
-        if (catefoodLocal.length == 0) {
-          res.render("about");
-          return;
+      bucket.upload(
+        files.myImageEdit.path,
+        {
+          public: true,
+          gzip: true,
+          metadata: {
+            firebaseStorageDownloadTokens: uuid(),
+            cacheControl: "public, max-age=31536000",
+          },
+        },
+        (err, file, callback) => {
+          if (err) console.log("loi 2");
+          getAllCateFood().then((data) => {
+            const allcatefoods = data.val();
+            const catefoodLocal = Object.entries(allcatefoods).filter((f) => {
+              // console.log(f[1].foodid);
+              return f[1].categoryid == fields.MaLoaiMonAn;
+            });
+            console.log(catefoodLocal);
+            if (catefoodLocal.length == 0) {
+              res.render("about");
+              return;
+            }
+            var ref = cate.child(catefoodLocal[0][0]);
+            ref.update({
+              "categoryid:": fields.MaLoaiMonAn,
+              name: fields.TenLoaiMonAn,
+              image: file.metadata.mediaLink,
+            });
+            res.render("editloaimonan", {
+              loaimonanCanUpdate: catefoodLocal[0],
+            });
+          });
         }
-        var ref = cate.child(catefoodLocal[0][0]);
-        ref.update({
-          "categoryid:": fields.MaLoaiMonAn,
-          name: fields.TenLoaiMonAn,
-        });
-        res.render("editloaimonan", { loaimonanCanUpdate: catefoodLocal[0] });
-      });
+      );
+
+      res.redirect(200, "/loaiproduct");
     });
-
-  res.redirect(200, "/loaiproduct");
 });
-
 router.post("/deleteLoaiProduct", (req, res) => {
   new formidable.IncomingForm({
     hash: "md5",
@@ -722,19 +736,15 @@ router.post("/deleteLoaiProduct", (req, res) => {
         if (childSnapshot.val().categoryid === categoryId) {
           cate.child(childSnapshot.key).remove();
           ok = true;
-          
+
           return;
         }
-       
       });
 
-      if (ok)
-        res.status(200).redirect("loaiproduct");
-      else
-        res.render("error");
+      if (ok) res.status(200).redirect("loaiproduct");
+      else res.render("error");
     });
   });
-  
 });
 
 router.post("/insertUser", (req, res) => {
@@ -860,31 +870,24 @@ router.post("/deleteUser", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-
       const userId = fields.TenDangNhap;
 
-      user.once("value").then(function(snapshot){
+      user.once("value").then(function (snapshot) {
         let ok = false;
 
-        snapshot.forEach(function(childSnapshot){
-          if(childSnapshot.val().usname === userId){
+        snapshot.forEach(function (childSnapshot) {
+          if (childSnapshot.val().usname === userId) {
             user.child(childSnapshot.key).remove();
             ok = true;
 
             return;
           }
-
         });
 
-        if(ok)
-          res.status(200).redirect("user");
-        else
-          res.render("error");
-
+        if (ok) res.status(200).redirect("user");
+        else res.render("error");
       });
-   
     });
-
 });
 
 router.post("/insertHoaDon", (req, res) => {
@@ -1008,29 +1011,22 @@ router.post("/deleteHoaDon", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-
       const hoadonId = fields.MaHoaDon;
 
-      hoadon.once("value").then(function (snapshot){
+      hoadon.once("value").then(function (snapshot) {
         let ok = false;
-        snapshot.forEach(function (childSnapshot){
-          if(childSnapshot.val().billid === hoadonId){
+        snapshot.forEach(function (childSnapshot) {
+          if (childSnapshot.val().billid === hoadonId) {
             hoadon.child(childSnapshot.key).remove();
             ok = true;
             return;
           }
-
         });
 
-        if(ok)
-          res.status(200).redirect("hoadon");
-        else
-          res.render("error");
+        if (ok) res.status(200).redirect("hoadon");
+        else res.render("error");
       });
-     
     });
-
- 
 });
 
 //// Lấy IP theo máy tính
