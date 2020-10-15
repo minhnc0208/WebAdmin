@@ -2,6 +2,24 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const formidable = require("formidable");
+const googleStorage = require('@google-cloud/storage');
+
+
+const uuid = require('uuid-v4');
+const Multer = require('multer');
+var config = {
+  projectId: 'pr0112-duan1',
+  keyFilename: './serviceFirebase.json'
+};
+
+// const storage = require('@google-cloud/storage')
+const { Storage } = require('@google-cloud/storage');
+const gcs = new Storage({
+  projectId: 'pr0112-duan1',
+  keyFilename: './serviceFirebase.json'
+   });
+const bucket = gcs.bucket('pr0112-duan1.appspot.com');
+
 app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
 app.use(bodyParser.json()); // support json encoded bodies
 const router = express();
@@ -259,7 +277,7 @@ router.get("/hoadon", function (request, response) {
 
 router.get("/loaiproduct", function (request, response) {
   getAllCateFood().then((data) => {
-    console.log(Object.values(data.val()));
+     console.log(Object.values(data.val()));
 
     response.render("loaiproduct", { pros1: Object.values(data.val()) });
   });
@@ -591,15 +609,49 @@ router.post("/insertLoaiProduct", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-      console.log(fields);
-      pros1.push({
-        hinh: dateTimeName1,
-        id: fields.MaLoaiMonAn,
-        ten: fields.TenLoaiMonAn,
+      // console.log(fields);
+      // Create a root reference
+      // console.log(files.myImage.path);
+      // return;
+      bucket.upload(files.myImage.path, {
+        public: true,
+        gzip: true,
+        metadata: {
+          firebaseStorageDownloadTokens: uuid(),
+          cacheControl: "public, max-age=31536000",
+        },
+      }, (err, file, callback) => {
+        if (err)
+          console.log('loi 2');
+
+        console.log(file.metadata);
+        cate.push().set({
+          'categoryid': fields.MaLoaiMonAn,
+          'name': fields.TenLoaiMonAn,
+          'image':file.metadata.mediaLink
+        }).then(result => {
+          const createPersistentDownloadUrl = (bucket, pathToFile, downloadToken) => {
+            return `https://firebasestorage.googleapis.com/v0/b/pr0112-duan1.appspot.com/o/${encodeURIComponent(
+              pathToFile
+            )}?alt=media&token=${downloadToken}`;
+          };
+  
+          console.log(createPersistentDownloadUrl);
+        }).catch(err => {
+          console.log('loi');
+        });
+        
       });
+     // https://firebasestorage.googleapis.com/v0/b/<projectId>.appspot.com/o/image.jpg?alt=media&token=<token>
+    
+     //https://firebasestorage.googleapis.com/v0/b/pr0112-duan1.appspot.com/o/7up.jpg?alt=media&token=8391df25-1da1-483f-bfec-6546bacb5795
+
+      // function createPublicFileURL(storageName){
+      //   return `http://storage.googleapis.com/${bucket}/${encodeURIComponent(storageName)}`;
+      // }
     });
 
-  res.redirect(200, "/loaiproduct");
+  res.redirect(200,"/loaiproduct");
 });
 
 router.post("/updateLoaiProduct", (req, res) => {
