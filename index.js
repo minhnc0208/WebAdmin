@@ -705,7 +705,7 @@ router.post("/updateLoaiProduct", (req, res) => {
             }
             var ref = cate.child(catefoodLocal[0][0]);
             ref.update({
-              "categoryid:": fields.MaLoaiMonAn,
+              // "categoryid:": fields.MaLoaiMonAn,
               name: fields.TenLoaiMonAn,
               image: file.metadata.mediaLink,
             });
