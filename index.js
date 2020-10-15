@@ -615,15 +615,19 @@ router.post("/insertLoaiProduct", (req, res) => {
           if (err) console.log("loi 2");
 
           // console.log(file.metadata);
-          cate
-            .push()
-            .set({
+          // let ok = false
+          cate.push() .set({
               categoryid: fields.MaLoaiMonAn,
               name: fields.TenLoaiMonAn,
               image: file.metadata.mediaLink,
+
+              
             }).catch((err) => {
               console.log("loi");
             });
+            // ok = true;
+            // return;
+
             // .then((result) => {
             //   const createPersistentDownloadUrl = (
             //     bucket,
@@ -638,9 +642,12 @@ router.post("/insertLoaiProduct", (req, res) => {
             //   console.log(createPersistentDownloadUrl);
             // })
             
+            // if(ok)
+            //   res.status(200).redirect("loaiproduct");
+            // else
+            //   res.render("error");  
         }
       );
-    
     });
 
   res.redirect(200, "/loaiproduct");
@@ -709,8 +716,8 @@ router.post("/updateLoaiProduct", (req, res) => {
         }
       );
 
-      res.redirect(200, "/loaiproduct");
     });
+    res.redirect(200, "/loaiproduct");
 });
 
 router.post("/deleteLoaiProduct", (req, res) => {
