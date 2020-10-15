@@ -621,32 +621,26 @@ router.post("/insertLoaiProduct", (req, res) => {
               categoryid: fields.MaLoaiMonAn,
               name: fields.TenLoaiMonAn,
               image: file.metadata.mediaLink,
-            })
-            .then((result) => {
-              const createPersistentDownloadUrl = (
-                bucket,
-                pathToFile,
-                downloadToken
-              ) => {
-                return `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${encodeURIComponent(
-                  pathToFile
-                )}?alt=media&token=${downloadToken}`;
-              };
-
-              console.log(createPersistentDownloadUrl);
-            })
-            .catch((err) => {
+            }).catch((err) => {
               console.log("loi");
             });
+            // .then((result) => {
+            //   const createPersistentDownloadUrl = (
+            //     bucket,
+            //     pathToFile,
+            //     downloadToken
+            //   ) => {
+            //     return `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${encodeURIComponent(
+            //       pathToFile
+            //     )}?alt=media&token=${downloadToken}`;
+            //   };
+
+            //   console.log(createPersistentDownloadUrl);
+            // })
+            
         }
       );
-      // https://firebasestorage.googleapis.com/v0/b/<projectId>.appspot.com/o/image.jpg?alt=media&token=<token>
-
-      //https://firebasestorage.googleapis.com/v0/b/pr0112-duan1.appspot.com/o/7up.jpg?alt=media&token=8391df25-1da1-483f-bfec-6546bacb5795
-
-      // function createPublicFileURL(storageName){
-      //   return `http://storage.googleapis.com/${bucket}/${encodeURIComponent(storageName)}`;
-      // }
+    
     });
 
   res.redirect(200, "/loaiproduct");
@@ -718,6 +712,7 @@ router.post("/updateLoaiProduct", (req, res) => {
       res.redirect(200, "/loaiproduct");
     });
 });
+
 router.post("/deleteLoaiProduct", (req, res) => {
   new formidable.IncomingForm({
     hash: "md5",
