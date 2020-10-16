@@ -476,18 +476,18 @@ router.post("/insertProduct", (req, res) => {
 
           // console.log(file.metadata);
           // let ok = false
-          food.push() .set({
+          food
+            .push()
+            .set({
               categorid: fields.MaLoaiMonAn,
               foodid: fields.MaMonAn,
               foodimage: file.metadata.mediaLink,
               foodname: fields.TenMon,
               price: parseInt(fields.GiaMonAn),
-
-              
-            }).catch((err) => {
+            })
+            .catch((err) => {
               console.log("loi");
             });
-           
         }
       );
     });
@@ -522,24 +522,39 @@ router.post("/updateProduct", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-      getAllFoods().then((data) => {
-        const allfoods = data.val();
-        const foodLocal = Object.entries(allfoods).filter((f) => {
-          // console.log(f[1].foodid);
-          return f[1].foodid == fields.MaMonAn;
-        });
-        console.log(foodLocal);
-        if (foodLocal.length == 0) {
-          res.render("about");
-          return;
+      bucket.upload(
+        files.myImageEdit.path,
+        {
+          public: true,
+          gzip: true,
+          metadata: {
+            firebaseStorageDownloadTokens: uuid(),
+            cacheControl: "public, max-age=31536000",
+          },
+        },
+        (err, file, callback) => {
+          if (err) console.log("loi 2");
+          getAllFoods().then((data) => {
+            const allfoods = data.val();
+            const foodLocal = Object.entries(allfoods).filter((f) => {
+              // console.log(f[1].foodid);
+              return f[1].foodid == fields.MaMonAn;
+            });
+            console.log(foodLocal);
+            if (foodLocal.length == 0) {
+              res.render("about");
+              return;
+            }
+            var ref = food.child(foodLocal[0][0]);
+            ref.update({
+              foodimage: file.metadata.mediaLink,
+              foodname: fields.TenMon,
+              price: parseInt(fields.GiaMonAn),
+            });
+            res.render("editmonan", { monanCanUpdate: foodLocal[0] });
+          });
         }
-        var ref = food.child(foodLocal[0][0]);
-        ref.update({
-          price: parseInt(fields.GiaMonAn),
-          foodname: fields.TenMon,
-        });
-        res.render("editmonan", { monanCanUpdate: foodLocal[0] });
-      });
+      );
     });
 
   res.redirect(200, "/product");
@@ -638,36 +653,37 @@ router.post("/insertLoaiProduct", (req, res) => {
 
           // console.log(file.metadata);
           // let ok = false
-          cate.push() .set({
+          cate
+            .push()
+            .set({
               categoryid: fields.MaLoaiMonAn,
               name: fields.TenLoaiMonAn,
               image: file.metadata.mediaLink,
-
-              
-            }).catch((err) => {
+            })
+            .catch((err) => {
               console.log("loi");
             });
-            // ok = true;
-            // return;
+          // ok = true;
+          // return;
 
-            // .then((result) => {
-            //   const createPersistentDownloadUrl = (
-            //     bucket,
-            //     pathToFile,
-            //     downloadToken
-            //   ) => {
-            //     return `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${encodeURIComponent(
-            //       pathToFile
-            //     )}?alt=media&token=${downloadToken}`;
-            //   };
+          // .then((result) => {
+          //   const createPersistentDownloadUrl = (
+          //     bucket,
+          //     pathToFile,
+          //     downloadToken
+          //   ) => {
+          //     return `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${encodeURIComponent(
+          //       pathToFile
+          //     )}?alt=media&token=${downloadToken}`;
+          //   };
 
-            //   console.log(createPersistentDownloadUrl);
-            // })
-            
-            // if(ok)
-            //   res.status(200).redirect("loaiproduct");
-            // else
-            //   res.render("error");  
+          //   console.log(createPersistentDownloadUrl);
+          // })
+
+          // if(ok)
+          //   res.status(200).redirect("loaiproduct");
+          // else
+          //   res.render("error");
         }
       );
     });
@@ -737,9 +753,8 @@ router.post("/updateLoaiProduct", (req, res) => {
           });
         }
       );
-
     });
-    res.redirect(200, "/loaiproduct");
+  res.redirect(200, "/loaiproduct");
 });
 
 router.post("/deleteLoaiProduct", (req, res) => {
