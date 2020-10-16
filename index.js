@@ -459,15 +459,37 @@ router.post("/insertProduct", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-      console.log(fields);
+      //console.log(fields);
 
-      mon1.push({
-        hinh: dateTimeName,
-        foodid: fields.MaMonAn,
-        categorid: fields.MaLoaiMonAn,
-        foodname: fields.TenMon,
-        price: fields.GiaMonAn,
-      });
+      bucket.upload(
+        files.myImage.path,
+        {
+          public: true,
+          gzip: true,
+          metadata: {
+            firebaseStorageDownloadTokens: uuid(),
+            cacheControl: "public, max-age=31536000",
+          },
+        },
+        (err, file, callback) => {
+          if (err) console.log("loi 2");
+
+          // console.log(file.metadata);
+          // let ok = false
+          food.push() .set({
+              categorid: fields.MaLoaiMonAn,
+              foodid: fields.MaMonAn,
+              foodimage: file.metadata.mediaLink,
+              foodname: fields.TenMon,
+              price: parseInt(fields.GiaMonAn),
+
+              
+            }).catch((err) => {
+              console.log("loi");
+            });
+           
+        }
+      );
     });
 
   res.redirect(200, "/product");
