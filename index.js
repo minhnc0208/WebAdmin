@@ -23,6 +23,9 @@ app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
 app.use(bodyParser.json()); // support json encoded bodies
 const router = express();
 
+// Khai báo đường dẫn static dẫn đến localhost
+app.use('/assets', express.static('assets'));
+app.use('/image',express.static('image'));
 //firebase
 var firebase = require("firebase-admin");
 
@@ -247,7 +250,9 @@ router.get("/users", function (request, response) {
 router.get("/about", function (request, response) {
   response.render("about");
 });
-
+router.get("/contact", function (request, response) {
+  response.render("contact");
+});
 router.get("/hoadonchitiet/:bill_id", function (request, response) {
   const billId = request.params.bill_id;
 
