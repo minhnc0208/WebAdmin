@@ -8,7 +8,7 @@
     /* background: linear-gradient(to right, #0062E6, #33AEFF); */
   }
   .logo{
-    margin-left: 130px;
+    margin-left: 140px;
     width: 100%;
   }
   .card-signin {
@@ -104,7 +104,7 @@
   
   .btn-google {
     color: white;
-    background-color: #ea4335;
+    background-color: #f9bc00;
   }
   
   .btn-facebook {

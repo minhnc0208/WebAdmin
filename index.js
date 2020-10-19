@@ -3,9 +3,11 @@ const app = express();
 const bodyParser = require("body-parser");
 const formidable = require("formidable");
 const googleStorage = require("@google-cloud/storage");
-
+const mongoose = require('mongoose');
+const expressEjsLayout = require('express-ejs-layouts')
 const uuid = require("uuid-v4");
 const Multer = require("multer");
+const adminLogin = require("./model/admin");
 var config = {
   projectId: "pr0112-duan1",
   keyFilename: "./serviceFirebase.json",
@@ -89,6 +91,10 @@ async function getAllHoaDonChiTiet(bill_id) {
   return hoaDonChiTiet[bill_id];
 }
 
+// async function login(emailLogin){
+//   var emailLogin = 
+// }
+
 // var a = await getAllHoaDonChiTiet('1590829888816');
 // console.log('aa:', a);
 // console.log(a);
@@ -97,6 +103,9 @@ async function getAllHoaDonChiTiet(bill_id) {
 // //router
 var path = require("path");
 const { Router } = require("express");
+var passport = require('passport');
+// var morgan       = require('morgan');
+// var cookieParser = require('cookie-parser');
 
 var mon1 = [
   {
@@ -225,6 +234,7 @@ router.get("/", function (request, response) {
 });
 
 router.get("/login", function (request, response) {
+
   response.render("login");
 });
 
@@ -250,9 +260,13 @@ router.get("/users", function (request, response) {
 router.get("/about", function (request, response) {
   response.render("about");
 });
+router.get("/register", function (request, response) {
+  response.render("register");
+});
 router.get("/contact", function (request, response) {
   response.render("contact");
 });
+
 router.get("/hoadonchitiet/:bill_id", function (request, response) {
   const billId = request.params.bill_id;
 
@@ -1073,7 +1087,20 @@ router.post("/deleteHoaDon", (req, res) => {
     });
 });
 
+router.post("/postLogin", (req, res) => {
+  new formidable.IncomingForm()
+  .parse(req, (err, fields, files) => {
+    console.log(fields);
 
+    if(fields.emailLogin =="admin@gmail.com" && fields.passLogin == "admin"){
+      res.redirect("product");
+    }
+    else {
+      console.log(err);
+      res.redirect("error");
+    }
+  });
+});
 //// Lấy IP theo máy tính
 
 var os = require("os");
@@ -1103,6 +1130,10 @@ Object.keys(ifaces).forEach(function (ifname) {
 app.use("/", router);
 
 app.use("/css", express.static(__dirname + "/css"));
+
+// app.use(morgan('dev')); // sử dụng để log mọi request ra console
+
+// app.use(cookieParser()); // sử dụng để đọc thông tin từ cookie
 
 app.listen(3000, () => {
   console.log("http:localhost:3000");
