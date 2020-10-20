@@ -26,6 +26,7 @@ app.use(bodyParser.json()); // support json encoded bodies
 const router = express();
 
 // Khai báo đường dẫn static dẫn đến localhost
+app.use('/js',express.static('js'));
 app.use('/assets', express.static('assets'));
 app.use('/image',express.static('image'));
 //firebase
@@ -260,9 +261,22 @@ router.get("/users", function (request, response) {
 router.get("/about", function (request, response) {
   response.render("about");
 });
-router.get("/register", function (request, response) {
-  response.render("register");
+
+router.get("/error", function (request, response) {
+  response.render("error");
 });
+router.get("/chonngay", function (request, response) {
+  response.render("chonngay");
+});
+router.get("/thongke", function (request, response) {
+  getAllHoaDon().then((data) => {
+    console.log(Object.values(data.val()));
+
+    response.render("thongke", { thongke1: Object.values(data.val()) });
+  });
+
+});
+
 router.get("/contact", function (request, response) {
   response.render("contact");
 });
@@ -1091,13 +1105,17 @@ router.post("/postLogin", (req, res) => {
   new formidable.IncomingForm()
   .parse(req, (err, fields, files) => {
     console.log(fields);
-
+   
     if(fields.emailLogin =="admin@gmail.com" && fields.passLogin == "admin"){
+      // console.log(fields.emailLogin + fields.passLogin);
+      console.log("Đăng nhập thành công");
+    
+      
       res.redirect("product");
     }
     else {
       console.log(err);
-      res.redirect("error");
+      res.render("error")
     }
   });
 });
@@ -1106,6 +1124,10 @@ router.post("/postLogin", (req, res) => {
 var os = require("os");
 
 var ifaces = os.networkInterfaces();
+
+// var DateTimePicker = require('date-time-picker');
+
+// var DateTimePicker = window.DateTimePicker;
 
 Object.keys(ifaces).forEach(function (ifname) {
   var alias = 0;
