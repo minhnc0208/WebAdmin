@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hóa đơn</title>
-
+    <link
+    rel="shortcut icon"
+    type="image/x-icon"
+    href="../assets/img/logo/logo5.png"
+  />
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -19,18 +23,70 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css"
       rel="stylesheet"
     />
-   
-    <!-- <link
+    
+    <link
       href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"
       rel="stylesheet"
-    /> -->
+    />
     <link href="../css/date-time-picker.min.css" rel="stylesheet">
+    <link
+    href="../assets/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
     <script type="text/javascript" src="../js/date-time-picker.min.js"></script>
+  
     <link
       rel="stylesheet"
       type="text/css"
       href="../css/dataTables.bootstrap4.min.css"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../css/clock.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../assets/css/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../assets/css/magnific-popup.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../assets/css/fontawesome-all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../assets/css/themify-icons.css"
+    />
+    <script src="../js/clock.js"></script>
+    <script>
+      function startTime() {
+        var today = new Date();
+        var d = today.getDay();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1;
+        var yy = today.getFullYear();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        document.getElementById('txt').innerHTML =
+        "Thứ "+d+", "+"ngày "+ dd + " tháng "+ mm + " năm " +yy + " | " + h + ":" + m + ":" + s;
+        var t = setTimeout(startTime, 500);
+      }
+      function checkTime(i) {
+        if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+        return i;
+      }
+  </script>
     <style>
       table.dataTable {
         border-collapse: collapse !important;
@@ -49,7 +105,18 @@
     </style>
   </head>
 
-  <body>
+  <body onload="startTime()">
+    <!--? Preloader Start -->
+    <div id="preloader-active">
+      <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+          <div class="preloader-circle"></div>
+          <div class="preloader-img pere-text">
+            <img src="../assets/img/logo/logo5.png" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container-fluid header-web"></div>
 
     <div class="body-web">
@@ -57,7 +124,7 @@
         <div class="py-4 px-3 bg-light">
           <div class="media d-flex align-items-center">
             <img
-              src="https://res.cloudinary.com/mhmd/image/upload/v1556074849/avatar-1_tcnd60.png"
+              src="../assets/img/logo/logo5.png"
               alt="..."
               width="65"
               class="mr-3 rounded-circle img-thumbnail shadow-sm"
@@ -105,9 +172,10 @@
       <div class="contents">
         <div class="contents-title">
           <h2>Thống kê</h2>
-          <!-- <div class="button-add" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">
-                    Thêm hóa đơn
-                </div> -->
+          <div id="txt" style="color:red;margin-left: 130px;margin-top: 30px;font-weight: bold;" ></div>
+
+         
+
         </div>
         <label for="formGroupExampleInput" class="labelTime"
           >Chọn thời gian</label
@@ -116,16 +184,22 @@
         <input type="date" class="form-control1" id="date" />
 
         <button type="button" class="btn btn-success" id="showDate">
+          Chọn ngày tháng năm
+        </button>
+        
+        <button type="button" class="btn btn-success" >
           Xác nhận
         </button>
+<div id="clock"></div>
+
 
         <script type="text/javascript">
           showDate.onclick = function () {
             var datePicker = new DateTimePicker.Date({
               lang: "en-EN",
               default: date.value,
-              min: "2018-01-01",
-              max: "2025-12-31",
+              min: "2020-01-01",
+              max: "2099-12-31",
             });
             datePicker.on("selected", function (formatDate, now) {
               console.log("selected date: ", formatDate, now);
@@ -145,6 +219,7 @@
         >
           <thead>
             <tr>
+              <th>STT</th>
               <th>Mã hóa đơn</th>
               <th>Ngày tạo hóa đơn</th>
               <th>Địa chỉ</th>
@@ -152,7 +227,6 @@
               <th>Trạng thái</th>
               <th>Tổng giá</th>
               <th>Tên khách hàng</th>
-              <th>Tổng cộng</th>
               <th>Sửa</th>
               <th>Xóa</th>
               <th>Xuất Excel</th>
@@ -169,6 +243,7 @@
                             <img src="<%= item.hinh %>" alt=""  style="width: 100%; height: 8rem;"  > 
                      
                          </td> -->
+              <td>1</td>
               <td class="tcenter"><%= item.billid %></td>
               <td class="tcenter"><%= item.date %></td>
               <td class="tcenter"><%= item.address %></td>
@@ -176,7 +251,7 @@
               <td class="tcenter"><%= item.state %></td>
               <td class="tcenter"><%= item.total %></td>
               <td class="tcenter"><%= item.username %></td>
-              <td></td>
+           
 
               <td class="tcenter">
                 <span class="table-edit">

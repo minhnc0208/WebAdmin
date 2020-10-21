@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Món Ăn</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <link
+    rel="shortcut icon"
+    type="image/x-icon"
+    href="../assets/img/logo/logo5.png"
+  />
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -14,7 +18,12 @@
     />
 
     <link rel="stylesheet" type="text/css" href="../css/car.css" />
-
+    <link
+    rel="stylesheet"
+    type="text/css"
+    href="../css/dataTables.bootstrap4.min.css"
+  />
+ 
     <!-- DataTables link -->
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css"
@@ -24,7 +33,31 @@
       href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"
       rel="stylesheet"
     />
-
+    <link
+    href="../assets/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+    <script>
+      function startTime() {
+        var today = new Date();
+        var d = today.getDay();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1;
+        var yy = today.getFullYear();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        document.getElementById('txt').innerHTML =
+        "Thứ "+d+", "+"ngày "+ dd + " tháng "+ mm + " năm " +yy + " | " + h + ":" + m + ":" + s;
+        var t = setTimeout(startTime, 500);
+      }
+      function checkTime(i) {
+        if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+        return i;
+      }
+    </script>
     <style>
       table.dataTable {
         border-collapse: collapse !important;
@@ -32,7 +65,7 @@
     </style>
   </head>
 
-  <body>
+  <body onload="startTime()">
     <div class="container-fluid header-web"></div>
 
     <div class="body-web">
@@ -40,7 +73,7 @@
         <div class="py-4 px-3 bg-light">
           <div class="media d-flex align-items-center">
             <img
-              src="https://res.cloudinary.com/mhmd/image/upload/v1556074849/avatar-1_tcnd60.png"
+              src="../assets/img/logo/logo5.png"
               alt="..."
               width="65"
               class="mr-3 rounded-circle img-thumbnail shadow-sm"
@@ -88,6 +121,7 @@
       <div class="contents">
         <div class="contents-title">
           <h2>Món ăn</h2>
+          <div id="txt" style="color:red;font-weight: bold;" ></div>
           <div
             class="button-add"
             data-toggle="modal"
@@ -96,6 +130,8 @@
           >
             Thêm món ăn
           </div>
+         
+
         </div>
 
         <!-- <div class="information">

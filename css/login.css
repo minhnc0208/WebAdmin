@@ -11,6 +11,9 @@
     margin-left: 140px;
     width: 100%;
   }
+  .txt{
+    color:red;
+  }
   .card-signin {
     border: 0;
     border-radius: 1rem;

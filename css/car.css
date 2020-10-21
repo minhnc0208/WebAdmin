@@ -29,7 +29,7 @@
 
 .classHome {
     display: flex;
-    background-color: red;
+    background-color: #f6bb03;
     height: 3rem;
     padding-top: 0.3rem;
     margin-top: 0.3rem;
@@ -56,7 +56,7 @@
 
 .nav-item{
     display: flex;
-    background-color:blue;
+    background-color:purple;
     color:red;
     font-size: 1.3em;
     margin-top: 0.5rem;

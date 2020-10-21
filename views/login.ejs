@@ -55,8 +55,31 @@
     />
     <link rel="stylesheet" type="text/css" href="../assets/css/style.css" />
     <link rel="stylesheet" type="text/css" href="../css/login.css" />
+   
+    <script>
+      function startTime() {
+        var today = new Date();
+        var d = today.getDay();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1;
+        var yy = today.getFullYear();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        document.getElementById('txt').innerHTML =
+        "Thứ "+d+", "+"ngày "+ dd + " tháng "+ mm + " năm " +yy + " | " + h + ":" + m + ":" + s;
+
+        var t = setTimeout(startTime, 500);
+      }
+      function checkTime(i) {
+        if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+        return i;
+      }
+      </script>
   </head>
-  <body>
+  <body onload="startTime()">
     <!--? Preloader Start -->
     <div id="preloader-active">
       <div class="preloader d-flex align-items-center justify-content-center">
@@ -85,6 +108,10 @@
                 <h5 class="card-title text-center">
                   <b>Đăng nhập với tư cách Admin</b>
                 </h5>
+
+               <!-- <label style="margin-top:4 0px;">Thời gian</label> -->
+                <div id="txt" style="color:red;margin-left: 30px;margin-top: 30px;font-weight: bold;" ></div>
+                <br>
                 <form class="form-signin" action="/postLogin" method="POST" enctype="multipart/form-data">
                   <div class="form-label-group">
                     <input
@@ -119,7 +146,7 @@
                     >
                   </div>
 
-                  <div class="custom-control custom-checkbox mb-3">
+                  <!-- <div class="custom-control custom-checkbox mb-3">
                     <input
                       type="checkbox"
                       class="custom-control-input"
@@ -128,7 +155,7 @@
                     <label class="custom-control-label" for="customCheck1"
                       >Nhớ mật khấu</label
                     >
-                  </div>
+                  </div> -->
                   <button
                     class="btn btn-lg btn-primary btn-block text-uppercase"
                     type="submit"
@@ -138,7 +165,8 @@
                   <hr class="my-4" />
                   <button
                     class="btn btn-lg btn-google btn-block text-uppercase"
-                    type="submit"
+                    type="button"
+                    data-dismiss="modal"
                     onclick="location.href='/'"
                   >
                     Trở về

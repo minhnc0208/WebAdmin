@@ -225,6 +225,7 @@ var pros1 = [
   },
 ];
 
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -265,9 +266,11 @@ router.get("/about", function (request, response) {
 router.get("/error", function (request, response) {
   response.render("error");
 });
+
 router.get("/chonngay", function (request, response) {
   response.render("chonngay");
 });
+
 router.get("/thongke", function (request, response) {
   getAllHoaDon().then((data) => {
     console.log(Object.values(data.val()));
