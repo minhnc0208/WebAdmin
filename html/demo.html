@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* The clock */
+      #clock {
+        background-color: black;
+        color: white;
+        display: inline-block;
+        width: auto;
+        padding: 0.25em 1em;
+        border-radius: 5px;
+      }
+
+      /* Paragraph fix */
+      #clock p {
+        margin: 5px;
+      }
+
+      /* Show time units and seprarator in a line */
+      #clock .time-unit,
+      #clock .separator {
+        display: inline-block;
+        text-align: center;
+      }
+
+      /* Show values using large text */
+      #clock .time-unit .large {
+        display: block;
+        font-size: 2em;
+      }
+
+      /* Show values using smaller text */
+      #clock .time-unit .small {
+        display: block;
+        font-size: 0.5em;
+      }
+
+      /* Align the separator with values */
+      #clock .separator {
+        font-size: 2em;
+        vertical-align: top;
+        margin-top: 0.1em;
+      }
+    </style>
+    <script>
+      // The week days
+      const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+      // The Clock Ticker
+      function clockTicker() {
+        // Clock units
+        var date = new Date();
+        var day = date.getDay();
+        var hrs = date.getHours();
+        var mins = date.getMinutes();
+        var secs = date.getSeconds();
+
+        // Update hours value if greater than 12
+        if (hrs > 12) {
+          hrs = hrs - 12;
+
+          document.querySelector("#clock .period").innerHTML = "PM";
+        } else {
+          document.querySelector("#clock .period").innerHTML = "AM";
+        }
+
+        // Pad the single digit units by 0
+        hrs = hrs < 10 ? "0" + hrs : hrs;
+        mins = mins < 10 ? "0" + mins : mins;
+        secs = secs < 10 ? "0" + secs : secs;
+
+        // Refresh the unit values
+        document.querySelector("#clock .day").innerHTML = weekDays[day];
+        document.querySelector("#clock .hours").innerHTML = hrs;
+        document.querySelector("#clock .minutes").innerHTML = mins;
+        document.querySelector("#clock .seconds").innerHTML = secs;
+
+        // Refresh the clock every 1 second
+        requestAnimationFrame(clockTicker);
+      }
+
+      // Start the clock
+      clockTicker();
+    </script>
+  </head>
+  <body onload="clockTicker">
+    <!-- The digital clock -->
+    <div id="clock">
+      <!-- Time units wrapper -->
+      <span class="wrap-time">
+        <!-- Time unit - Day -->
+        <span class="time-unit">
+          <span class="large day">Mon</span>
+          <span class="small">DAY</span>
+        </span>
+        <!-- Time unit - Hours -->
+        <span class="time-unit">
+          <span class="large hours">00</span>
+          <span class="small">HOURS</span>
+        </span>
+        <span class="separator">:</span>
+        <!-- Time unit - Minutes -->
+        <span class="time-unit">
+          <span class="large minutes">00</span>
+          <span class="small">MINUTES</span>
+        </span>
+        <span class="separator">:</span>
+        <!-- Time unit - Seconds -->
+        <span class="time-unit">
+          <span class="large seconds">00</span>
+          <span class="small">SECONDS</span>
+        </span>
+        <!-- Time unit - Period -->
+        <span class="time-unit">
+          <span class="large period">AM</span>
+          <span class="small">PERIOD</span>
+        </span>
+      </span>
+    </div>
+  </body>
+</html>

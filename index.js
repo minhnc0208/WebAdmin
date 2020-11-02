@@ -8,6 +8,9 @@ const expressEjsLayout = require('express-ejs-layouts')
 const uuid = require("uuid-v4");
 const Multer = require("multer");
 const adminLogin = require("./model/admin");
+const exceljs = require('exceljs');
+
+
 var config = {
   projectId: "pr0112-duan1",
   keyFilename: "./serviceFirebase.json",
@@ -265,6 +268,10 @@ router.get("/about", function (request, response) {
 
 router.get("/error", function (request, response) {
   response.render("error");
+});
+
+router.get("/vechungtoi", function (request, response) {
+  response.render("vechungtoi");
 });
 
 router.get("/chonngay", function (request, response) {
