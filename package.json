@@ -21,6 +21,7 @@
     "express-session": "^1.17.1",
     "firebase-admin": "^9.2.0",
     "formidable": "^1.2.2",
+    "image-to-base64": "^2.1.1",
     "jquery-datetimepicker": "^2.5.21",
     "mongoose": "^5.10.9",
     "msexcel-builder": "^0.0.2",

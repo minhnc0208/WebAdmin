@@ -120,6 +120,11 @@
             <i class="fas fa-chart-bar"></i>
             <a class="nav-link" href="/thongke">Thống kê</a>
           </li>
+       
+          <li class="nav-item">
+            <i class="fas fa-chart-bar"></i>
+            <a class="nav-link" href="/danhgia">Đánh giá</a>
+          </li>
         </ul>
       </div>
 
@@ -156,9 +161,10 @@
             <tr>
               <th>Ảnh món ăn</th>
               <th>Mã món ăn</th>
-              <th>Mã thể loại món ăn</th>
               <th>Tên món ăn</th>
               <th>Giá món ăn</th>
+              <th>Khẩu phần</th>
+              <th>Mã người dùng</th>
               <th>Sửa</th>
               <th>Xóa</th>
             </tr>
@@ -167,17 +173,24 @@
           <tbody>
             <% mon1.forEach(function(item){ %>
             <tr>
-              <td style="width: 20%">
+              <td style="width: auto;">
                 <img
-                  src="<%= item.foodimage %>"
+                  src="data:image/jpg;base64, <%= item.anhMonAn %>"
                   alt=""
+                  class="image-food"
                   style="width: 100%; height: 8rem"
                 />
               </td>
-              <td class="tcenter"><%= item.foodid %></td>
+              <!-- <td class="tcenter"><%= item.foodid %></td>
               <td class="tcenter"><%= item.categorid %></td>
               <td class="tcenter"><%= item.foodname %></td>
-              <td class="tcenter"><%= item.price %></td>
+              <td class="tcenter"><%= item.price %></td> -->
+              <!-- <td class="tcenter"><%= item.anhMonAn %></td> -->
+              <td class="tcenter"><%= item.maMonAn %></td>
+              <td class="tcenter"><%= item.tenMonAn %></td>
+              <td class="tcenter"><%= item.giaMonAn %></td>
+              <td class="tcenter"><%= item.khauPhan %></td>
+              <td class="tcenter"><%= item.maNguoiDung %></td>
               <td class="tcenter">
                 <span class="table-edit">
                   <button
@@ -254,18 +267,19 @@
                   name="MaMonAn" 
                 />
               </div>
+
               <div class="form-group">
                 <label for="recipient-name" class="col-form-label">
-                  Mã thể loại món ăn :</label
+                  Mã phân loại món ăn :</label
                 >
                 <input
                   type="text"
                   class="form-control"
                   id="recipient-name"
-                  name="MaLoaiMonAn" 
+                  name="MaPhanLoaiMonAn" 
                 />
-              </div> 
-              
+              </div>
+
               <div class="form-group">
                 <label for="recipient-name" class="col-form-label">
                   Tên món ăn :</label
@@ -288,6 +302,93 @@
                   name="GiaMonAn"
                 ></textarea>
               </div>
+
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">
+                  Khẩu phần:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="recipient-name"
+                  name="KhauPhan"
+                />
+              </div>
+
+               <div class="form-group"> 
+                 <label for="recipient-name" class="col-form-label">Danh sách loại món:</label> 
+                 <!-- <input type="text" class="form-control" id="recipient-name" name="email">  -->
+                 <select class="form-control form-control-sm" name="LoaiMon"> 
+                    <option value="Salad">Salad</option>
+                    <option value="Canh">Canh</option>
+                    <option value="Nộm - Gỏi">Nộm - Gỏi</option>
+                    <option value="Nem - Chả">Nem - Chả</option>
+                    <option value="Xôi">Xôi</option>
+                    <option value="Bánh ngọt">Bánh ngọt</option>
+                    <option value="Cocktail - Mocktail">Cocktail - Mocktail</option>
+                    <option value="Chè">Chè</option>
+                    <option value="Đồ sống">Đồ sống</option>
+                    <option value="Cupcake - Muffin">Cupcake - Muffin</option>
+                    <option value="Miến - Hủ tiếu">Miến - Hủ tiếu</option>
+                    <option value="Đồ uống">Đồ uống</option>
+                    <option value="Nghêu - Sò - Ốc">Nghêu - Sò - Ốc</option>
+                    <option value="Món chiên">Món chiên</option>
+                    <option value="Chưng - hấp">Chưng - hấp</option>
+                    <option value="Kho - Rim">Kho - Rim</option>
+                    <option value="Món luộc">Món luộc</option>
+                    <option value="Sữa chua">Sữa chua</option>
+                    <option value="Nước chấm - Sốt">Nước chấm - Sốt</option>
+                    <option value="Lẩu">Lẩu</option>
+                    <option value="Soup - Cháo">Soup - Cháo</option>
+                    <option value="Chay">Chay</option>
+                    <option value="Bánh mặn">Bánh mặn</option>
+                    <option value="Sinh tố - Nước ép">Sinh tố - Nước ép</option>
+                    <option value="Kem">Kem</option>
+                    <option value="Mứt - Kẹo">Mứt - Kẹo</option>
+                    <option value="Snacks">Snacks</option>
+                    <option value="Pasta - Spaghetti">Pasta - Spaghetti</option>
+                    <option value="Bún - Mì - Phở">Bún - Mì - Phở</option>
+                    <option value="Nướng - Quay">Nướng - Quay</option>
+                    <option value="Rang - Xào">Rang - Xào</option>
+                    <option value="Món cuốn">Món cuốn</option>
+                    <option value="Muối chua - Ngâm chua">Muối chua - Ngâm chua</option>
+                    <option value="Ủ - Lên men">Ủ - Lên men</option>
+                    <option value="Thạch - Rau câu">Thạch - Rau câu</option> 
+                    
+                 </select> 
+               </div> 
+               <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Phân loại món:</label> 
+               <!-- <input type="text" class="form-control" id="recipient-name" name="email">  -->
+                 <select class="form-control form-control-sm" name="PhanLoaiMonAn">
+                     <option value="Món khai vị">Món khai vị</option>
+                    <option value="Món chay">Món chay</option>
+                    <option value="Món ăn sáng">Món ăn sáng</option>
+                    <option value="Thức uống">Thức uống</option>
+                    <option value="Món ăn cho trẻ">Món ăn cho trẻ</option>
+                    <option value="Món tráng miệng">Món tráng miệng</option>
+                    <option value="Món chính">Món chính</option>
+                    <option value="Nhanh và dễ">Nhanh và dễ</option>
+                    <option value="Bánh">Bánh</option>
+                    <option value="Món nhậu">Món nhậu</option>
+                    <option value="Món ăn thịnh hành">Món ăn thịnh hành</option> 
+                </select>
+              </div> 
+
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">
+                  Mã người dùng :</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="recipient-name"
+                  name="MaNguoiDung"
+                  value="7UNjGPRF8oaVIrAYWPxIVJngEFy1"
+                  readonly="readonly"
+                /> 
+              </div>
+
               <label for="message-text" class="col-form-label"
                 >Ảnh món ăn:</label
               >
@@ -405,9 +506,10 @@
       aoColumnDefs: [
         {
           bSortable: false,
-          aTargets: [5, 6],
+          aTargets: [6,7],
         },
       ],
     });
+
   </script>
 </html>

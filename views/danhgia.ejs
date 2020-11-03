@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hóa đơn</title>
+    <title>Đánh giá</title>
 
     <link
     rel="shortcut icon"
@@ -15,23 +15,48 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-        <link rel="stylesheet" type="text/css" href="../css/car.css">
+    <link rel="stylesheet" type="text/css" href="../css/car.css">
 
-        <link
-        rel="stylesheet"
-        type="text/css"
-        href="../css/dataTables.bootstrap4.min.css"
-      />
-      <link
+    <link
+    rel="stylesheet"
+    type="text/css"
+    href="../css/dataTables.bootstrap4.min.css"
+  />
+  
+
+    <!-- DataTables link -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link
     href="../assets/css/bootstrap.min.css"
     rel="stylesheet"
   />
-
-    <!-- DataTables link -->
-    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css" rel="stylesheet"> -->
-    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-
-
+  <link
+  rel="stylesheet"
+  type="text/css"
+  href="../css/dataTables.bootstrap4.min.css"
+/>
+    <script>
+        function startTime() {
+          var today = new Date();
+          var d = today.getDay() +1 ;
+          var dd = today.getDate();
+          var mm = today.getMonth()+1;
+          var yy = today.getFullYear();
+          var h = today.getHours();
+          var m = today.getMinutes();
+          var s = today.getSeconds();
+          m = checkTime(m);
+          s = checkTime(s);
+          document.getElementById('txt').innerHTML =
+          "Thứ "+d+", "+"ngày "+ dd + " tháng "+ mm + " năm " +yy + " | " + h + ":" + m + ":" + s;
+          var t = setTimeout(startTime, 500);
+        }
+        function checkTime(i) {
+          if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+          return i;
+        }
+    </script>
 
 
     <style>
@@ -42,10 +67,10 @@
 
 </head>
 
-<body>
+<body  onload="startTime()">
 
     <div class="container-fluid header-web">
-        
+
     </div>
 
 
@@ -94,7 +119,10 @@
                     <i class="fas fa-chart-bar"></i>
                     <a class="nav-link" href="/thongke">Thống kê</a>
                   </li>
-                  
+                  <li class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <a class="nav-link" href="/like">Yêu thích</a>
+                  </li>
                   <li class="nav-item">
                     <i class="fas fa-chart-bar"></i>
                     <a class="nav-link" href="/danhgia">Đánh giá</a>
@@ -105,9 +133,10 @@
 
         <div class="contents">
             <div class="contents-title">
-                <h2>Hóa đơn chi tiết</h2>
+                <h2>Đánh giá</h2>
+                <div id="txt" style="color:red;font-weight: bold;" ></div>
                 <!-- <div class="button-add" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">
-                    Thêm hóa đơn chi tiết
+                    Thêm loại món
                 </div> -->
             </div>
 
@@ -116,22 +145,19 @@
                 <div class="textTitle">Email</div>
                 <div class="textTitle">Delete</div>
                 <div class="textTitle">Update</div>
+
             </div> -->
 
             <table id="table" class="table table-striped table-bordered" style="width:100%">
 
                 <thead>
                     <tr>
-                        <th>Ảnh món ăn</th>
-                        <th>Mã hóa đơn</th>
-                        <th>Mã hóa đơn chi tiết</th>
+                        <!-- <th>Ảnh loại món ăn</th> -->
                         <th>Mã món ăn</th>
-                        <th>Tên món ăn</th>
-                        <th>Số lượng</th>
-                        <th>Giá</th>
+                        <th>Mã người dùng</th>
+                        <th>Số sao đánh giá</th>
                         <th>Sửa</th>
                         <th>Xóa</th>
-                        <th>Chọn</th>
                         <!-- <th>Age</th>
                         <th>Start date</th>
                         <th>Salary</th> -->
@@ -140,45 +166,42 @@
                 </thead>
 
                 <tbody>
-                   
-                    <% hoadonchitiet1.billdetail.forEach(function(item){ %>
+                    <% danhgia1.forEach(function(item){ %>
                     <tr>
-                        <td style="width: auto;">
-                            <img  src="data:image/jpg;base64, <%= item.anhMA %>" alt=""  style="width: 100%; height: 8rem;"  > 
-                     
-                         </td>
-                         <td class="tcenter"><%= hoadonchitiet1.billid %></td>
-                         <td class="tcenter"><%= item.maBilldetail %></td>
-                         <td class="tcenter"><%= item.maMonAn %></td>
-                         <td class="tcenter"><%= item.tenMonAn %></td>
-                         <td class="tcenter"><%= item.soluong %></td>
-                         <td class="tcenter"><%= item.giaMonAn %></td>
+                        <!-- <td style="width: 20%;">
+
+                            <img src="<%= item.image %>" alt="" style="width: 100%; height: 8rem;">
+
+                        </td>
+                        <td class="tcenter"><%= item.categoryid %></td>
+                        <td class="tcenter"><%= item.name %></td> -->
+                        <!-- <td style="width: 20%;">
+
+                            <img src="<%= item.image %>" alt="" style="width: 100%; height: 8rem;">
+
+                        </td> -->
+                        <td class="tcenter"><%= item.idMonAn %></td>
+                        <td class="tcenter"><%= item.idUser %></td>
+                        <td class="tcenter"><%= item.ratingStar %></td>
+                        
+                        
                         <td class="tcenter">
                             <span class="table-edit">
-                               
+
+
                                 <button type="button" style="width: 5rem; "
                                     class="btn btn-primary btn-rounded btn-sm my-0 "
-                                    onclick="location.href='/edithoadon/<%= hoadonchitiet1.billid %>'"
-                                    >Sửa</button>
+                                    onclick="location.href='/editloaimonan/<%= item.categoryid %>'">Sửa</button>
                             </span>
                         </td>
                         <td class="tcenter">
                             <span class="table-remove">
                                 <button type="button" style="width: 5rem; "
                                     class="btn btn-danger btn-rounded btn-sm my-0 "
-                                    onclick="location.href='/deletehoadon/<%= hoadonchitiet1.billid %>'"
-                                    >Xóa</button>
+                                    onclick="location.href='/deleteloaimonan/<%= item.categoryid %>'">Xóa</button>
                             </span>
                         </td>
-                        <td class="tcenter">
-                            <span class="table-edit">
-                               
-                                <button type="button" style="width: 5rem; "
-                                class="btn btn-info"
-                                    onclick="location.href='/hoadon/'"
-                                    >Trở về</button>
-                            </span>
-                        </td>
+
                     </tr>
                     <% }); %>
 
@@ -186,10 +209,8 @@
 
                 <tfoot>
                     <tr>
-                        
-                        <!-- <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th> -->
+
+                      
                     </tr>
 
                 </tfoot>
@@ -203,40 +224,42 @@
     </div>
 
 
-    <!-- display modal add information user
+    <!-- display modal add information user-->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Chi tiết hóa đơn</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Chi tiết loại món ăn</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="/insertHoaDon" enctype="multipart/form-data">
+                    <form method="POST" action="/insertLoaiProduct" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label for="recipient-name" class="col-form-label"> Mã hóa đơn :</label>
-                            <input type="text" class="form-control" id="recipient-name" name="MaHoaDon">
+                            <label for="recipient-name" class="col-form-label"> Mã loại món ăn :</label>
+                            <input type="text" class="form-control" id="recipient-name" name="MaLoaiMonAn">
                         </div>
+
                         <div class="form-group">
-                            <label for="message-text" class="col-form-label"> Tổng giá:</label>
-                            <textarea class="form-control" id="message-text" name="TongGia"></textarea>
+                            <label for="message-text" class="col-form-label"> Tên loại món ăn:</label>
+                            <textarea class="form-control" id="message-text" name="TenLoaiMonAn"></textarea>
                         </div>
-                        <label for="recipient-name" class="col-form-label">Ảnh hóa đơn :</label>
+                        <label for="recipient-name" class="col-form-label">Ảnh loại món ăn:</label>
                         <br>
-                        <input type="file" name="myImage"accept="image/*">
-                        
+                        <input type="file" name="myImage" accept="image/*">
+
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Thêm</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                         </div>
                     </form>
                 </div>
+
             </div>
         </div>
-    </div> -->
+    </div>
 
     <!-- display modal edit information user -->
 
@@ -258,18 +281,22 @@
                             <label for="recipient-name" class="col-form-label"> Edit Client Name:</label>
                             <input type="text" class="form-control" id="recipient-name" name="name" value="">
                         </div>
+
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label"> Email:</label>
                             <input type="text" class="form-control" id="recipient-name" name="email" >
                         </div>
+
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label"> Password:</label>
                             <input type="text" class="form-control" id="recipient-name" name="password"  >
                         </div>
+
                         <div class="form-group">
                             <label for="message-text" class="col-form-label"> Information:</label>
                             <textarea class="form-control" id="message-text" name="information" ></textarea>
                         </div>
+
                        <form method="post" enctype="multipart/form-data" action="/uploadphoto"> -->
     <!-- <input type="file" name="myImageEdit" accept="image/*" > -->
 
@@ -278,11 +305,15 @@
                             <button type="submit" class="btn btn-primary">Edit Client</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
+
                     </form>
+
+
                 </div>
+
             </div>
         </div>
-    </div> --> 
+    </div> -->
 
 
 </body>
@@ -293,13 +324,13 @@
 <!-- link script -->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-</script>
+    </script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
     integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-</script>
+    </script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-</script>
+    </script>
 
 
 <!-- DataTables script -->
@@ -311,12 +342,15 @@
 <script>
     $(document).ready(function () {
         $('#table').DataTable();
+
     });
+
     var oTable = $('#table').dataTable({
         "aoColumnDefs": [{
-                "bSortable": false,
-                "aTargets": [7,8,9]
-            },
+            "bSortable": false,
+            "aTargets": [3,4]
+        },
+
         ]
     });
 </script>
