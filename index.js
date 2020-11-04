@@ -1353,13 +1353,12 @@ router.get("/product", async function (request, response) {
   });
 });
 
-router.get("/edituser/:usname", function (request, response) {
+router.get("/edituser/:uid", function (request, response) {
   getAllUser().then((data) => {
     const allusers = data.val();
     const user = Object.values(allusers).find(
-      (f) => f.usname == request.params.usname
+      (f) => f.uid === request.params.uid
     );
-    console.log(user);
 
     if (user === undefined) {
       response.render("error");
@@ -1383,11 +1382,11 @@ router.get("/deleteuser/:usname", function (request, response) {
   });
 });
 
-router.get("/editmonan/:foodid", function (request, response) {
+router.get("/editmonan/:maMonAn", function (request, response) {
   getAllFoods().then((data) => {
     const allfoods = data.val();
     const food = Object.values(allfoods).find(
-      (f) => f.foodid == request.params.foodid
+      (f) => f.maMonAn == request.params.maMonAn
     );
     console.log(food);
     if (food === undefined) {
@@ -1594,43 +1593,33 @@ router.post("/updateProduct", (req, res) => {
       return;
     })
     .on("end", () => console.log("end"))
-    .parse(req, (err, fields, files) => {
-      bucket.upload(
-        files.myImageEdit.path,
-        {
-          public: true,
-          gzip: true,
-          metadata: {
-            firebaseStorageDownloadTokens: uuid(),
-            cacheControl: "public, max-age=31536000",
-          },
-        },
-        (err, file, callback) => {
-          if (err) console.log("loi 2");
+    .parse(req, async (err, fields, files) => {
+      var base64 = await imageToBase64(files.myImageEdit.path);
           getAllFoods().then((data) => {
             const allfoods = data.val();
             const foodLocal = Object.entries(allfoods).filter((f) => {
               // console.log(f[1].foodid);
-              return f[1].foodid == fields.MaMonAn;
+              return f[1].maMonAn == fields.MaMonAn;
             });
             console.log(foodLocal);
             if (foodLocal.length == 0) {
-              res.render("about");
+              res.render("error");
               return;
             }
             var ref = food.child(foodLocal[0][0]);
             ref.update({
-              foodimage: file.metadata.mediaLink,
-              foodname: fields.TenMon,
-              price: parseInt(fields.GiaMonAn),
+              anhMonAn: base64,
+              tenMonAn: fields.TenMon,
+              giaMonAn: fields.GiaMonAn,
+              khauPhan:fields.KhauPhan
             });
             res.render("editmonan", { monanCanUpdate: foodLocal[0] });
           });
-        }
-      );
+        
+      
     });
 
-  res.redirect(200, "/product");
+  res.redirect(200,"/product");
 });
 
 router.post("/deleteProduct", (req, res) => {
@@ -1913,12 +1902,12 @@ router.post("/updateUser", (req, res) => {
     multiples: true,
   })
     .on("fileBegin", function (filename, file) {
-      console.log(filename);
+      // console.log(filename);
       file.path = path.join("D:/Exmaple01/Exmaple01/public", dateTimeName2);
-      console.log(file.path);
+      // console.log(file.path);
     })
     .on("file", async function (name, file) {
-      console.log(name);
+      // console.log(name);
     })
     .on("aborted", (users1) => {
       console.log("aborted");
@@ -1930,30 +1919,81 @@ router.post("/updateUser", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-      getAllUser().then((data) => {
-        const allusers = data.val();
-        const userLocal = Object.entries(allusers).filter((f) => {
-          return f[1].usname == fields.TenDangNhap;
-        });
-        console.log(userLocal);
-        if (userLocal.length == 0) {
-          res.render("about");
-          return;
-        }
-        var ref = user.child(userLocal[0][0]);
-        ref.update({
-          fullname: fields.TenKhachHang,
-          password: fields.MatKhau,
-          phone: fields.SoDienThoai,
-          gender: fields.GioiTinh,
-          ruler: fields.QuyenSuDung,
-        });
-        res.render("edituser", { userCanUpdate: userLocal[0] });
-      });
-    });
+      
+      // var base64Avatar = files.avatar_image != null ? await imageToBase64(files.avatar_image.path) : "";
+      // var base64Cover =  files.cover_image != null ? await imageToBase64(files.cover_image.path) : "";
 
-  res.redirect(200, "/user");
+      // getAllUser().then((data) => {
+      //   const allusers = data.val();
+      //   const userLocal = Object.entries(allusers).filter((f) => {
+      //     return f[1].uid == fields.MaKhachHang;
+      //   });
+      //   // console.log('bbb', userLocal);
+      //   if (userLocal.length == 0) {
+      //     res.render("erorr");
+      //     return;
+      //   }
+      //   var ref = user.child(userLocal[0][0]);
+      //   ref.update({
+      //     cover:base64Cover,
+      //     email:fields.EmailKhachHang,
+      //     fullname: fields.TenKhachHang,
+      //     image:base64Avatar,
+      //     phone: fields.SoDienThoai,
+      //     uid: fields.MaKhachHang,
+      //   }).then((f) => {
+      //     res.redirect("/user");
+      //   }).catch((err) => {
+      //     res.render("erorr");
+      //   });
+      //   // res.render("edituser", { userCanUpdate: userLocal[0] });
+      
+      // });
+      bucket.upload(
+        files.myImageEdit.path,
+        {
+          public: true,
+          gzip: true,
+          metadata: {
+            firebaseStorageDownloadTokens: uuid(),
+            cacheControl: "public, max-age=31536000",
+          },
+        },
+        (err, file, callback) => {
+          if (err) console.log("loi 2");
+          getAllUser().then((data) => {
+            const allusers = data.val();
+            const userLocal = Object.entries(allusers).filter((f) => {
+              return f[1].uid == fields.MaKhachHang;
+            });
+            // console.log('bbb', userLocal);
+            if (userLocal.length == 0) {
+              res.render("erorr");
+              return;
+            }
+            var ref = user.child(userLocal[0][0]);
+            ref.update({
+              cover:file.metadata.mediaLink,
+              email:fields.EmailKhachHang,
+              fullname: fields.TenKhachHang,
+              image:file.metadata.mediaLink,
+              phone: fields.SoDienThoai,
+              uid: fields.MaKhachHang,
+            }).then((f) => {
+              res.redirect("/user");
+            }).catch((err) => {
+              res.render("erorr");
+            });
+            // res.render("edituser", { userCanUpdate: userLocal[0] });
+          
+          });
+        }
+      );
+    });
 });
+
+  
+
 
 router.post("/deleteUser", (req, res) => {
   const dateTimeName2 = Date.now() + ".jpg";

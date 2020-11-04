@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit User</title>
+    <title>Cập nhật khách hàng</title>
     <link
     rel="shortcut icon"
     type="image/x-icon"
@@ -110,21 +110,13 @@
             <form action="/updateUser" method="POST" autocomplete="off" enctype="multipart/form-data" style="margin: 0 20px;">
              
                 <div class="form-group">
-                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;">  Tên khách hàng:</label>
+                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;">  Email đăng nhập:</label>
+                    <input type="text" class="form-control" id="recipient-name" name="EmailKhachHang" value="<%= userCanUpdate.email %>" readonly="readonly">
+                </div>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;">  Tên hiển thị:</label>
                     <input type="text" class="form-control" id="recipient-name" name="TenKhachHang" value="<%= userCanUpdate.fullname %>">
                 </div>
-
-                <div class="form-group">
-                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;">  Tên đăng nhập:</label>
-                    <input type="text" class="form-control" id="recipient-name" name="TenDangNhap" readonly="readonly" value="<%= userCanUpdate.usname %>">
-                </div>
-
-                <div class="form-group">
-                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Mật khẩu:</label>
-                    <input type="text" class="form-control" id="recipient-name" name="MatKhau"
-                        value="<%= userCanUpdate.password %>">
-                </div>
-                
 
                 <div class="form-group">
                     <label for="message-text" class="col-form-label" style="font-weight: bold;">  Số điện thoại:</label>
@@ -132,31 +124,27 @@
                     value="<%= userCanUpdate.phone %>">
                     <!-- <input type="text" class="form-control" id="recipient-name" name="information" value=""> -->
                 </div>
-                <div class="form-group">
-                    <label for="recipient-name" class="col-form-label"> Giới tính:</label>
-                    <!-- <input type="text" class="form-control" id="recipient-name" name="email"> -->
-                    <select class="form-control form-control-sm" name="GioiTinh" value="<%= userCanUpdate.gender %>">
-                        <option  value="Nam">Nam</option>
-                        <option  value="Nữ">Nữ</option>
-                        <option value="Khác">Khác</option>
 
-                    </select>
-                </div>
                 <div class="form-group">
-                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Quyền sử dụng:</label>
-                    <!-- <input type="text" class="form-control" id="recipient-name" name="password"
-                        value=""> -->
-                        <select class="form-control form-control-sm" name="QuyenSuDung" value="<%= userCanUpdate.ruler %>"> 
-                            <option value="Admin">Admin</option>
-                            <option value="User">User</option>
-                        </select>
+                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Mã khách hàng:</label>
+                    <input type="text" class="form-control" id="recipient-name" name="MaKhachHang" readonly="readonly"
+                        value="<%= userCanUpdate.uid %>">
                 </div>
+                
                 <!-- <form method="post" enctype="multipart/form-data" action="/uploadphoto"> -->
-                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Ảnh khách hàng:</label>
+                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Ảnh đại diện:</label>
                     <br>
                     <br>
+                <!-- <input type="file" name="avatar_image" accept="image/*"> -->
                 <input type="file" name="myImageEdit" accept="image/*">
-
+                     <br>   
+                     <br>
+                <!-- <form method="post" enctype="multipart/form-data" action="/uploadphoto"> -->
+                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Ảnh bìa:</label>
+                    <br>
+                    <br>
+                <!-- <input type="file" name="cover_image" accept="image/*"> -->
+                <input type="file" name="myImageEdit1" accept="image/*">
                 <!-- <input type="submit" value="Upload Photo"> -->
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Lưu</button>
