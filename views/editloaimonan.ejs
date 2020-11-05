@@ -113,15 +113,35 @@
               style="font-weight: bold"
               
             >
-              Mã loại món ăn:</label
+              Mã phân loại món ăn:</label
             >
             <input
               type="text"
               class="form-control"
               id="recipient-name"
-              name="MaLoaiMonAn"
+              name="MaPhanLoaiMonAn"
               readonly="readonly"
-              value="<%= loaimonanCanUpdate.categoryid %>"
+              value="<%= loaimonanCanUpdate.mPLMA %>"
+              
+            />
+          </div>
+
+          <div class="form-group">
+            <label
+              for="recipient-name"
+              class="col-form-label"
+              style="font-weight: bold"
+              
+            >
+              Mã món ăn:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="recipient-name"
+              name="MaMonAn"
+              readonly="readonly"
+              value="<%= loaimonanCanUpdate.maMonAn %>"
             />
           </div>
 
@@ -131,19 +151,70 @@
               class="col-form-label"
               style="font-weight: bold"
             >
-              Tên loại món ăn:</label
+               Loại món ăn:</label
             >
             <input
               type="text"
               class="form-control"
               id="recipient-name"
-              name="TenLoaiMonAn"
-              value="<%= loaimonanCanUpdate.name %>"
+              name="LoaiMonAn"
+              value="<%= loaimonanCanUpdate.loaiMon %>"
+              readonly="readonly"
             />
           </div>
 
+          <div class="form-group">
+            <label
+              for="recipient-name"
+              class="col-form-label"
+              style="font-weight: bold"
+            >
+              Phân loại món ăn:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="recipient-name"
+              name="PhanLoaiMonAn"
+              value="<%= loaimonanCanUpdate.plma %>"
+              readonly="readonly"
+            />
+          </div>
+          <!-- <div class="form-group">
+            <label
+              for="recipient-name"
+              class="col-form-label"
+              style="font-weight: bold"
+            >
+              Phân loại món ăn đã cập nhật:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="recipient-name"
+              name="PhanLoaiMonAnCapNhat"
+              value="<%= loaimonanCanUpdate.phanLoai %>"
+            />
+          </div> -->
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Phân loại món ăn cập nhật:</label> 
+           <!-- <input type="text" class="form-control" id="recipient-name" name="email">  -->
+             <select class="form-control form-control-sm" name="PhanLoaiMonAnCapNhat" value="<%= loaimonanCanUpdate.phanLoai %>">
+                 <option value="Món khai vị">Món khai vị</option>
+                <option value="Món chay">Món chay</option>
+                <option value="Món ăn sáng">Món ăn sáng</option>
+                <option value="Thức uống">Thức uống</option>
+                <option value="Món ăn cho trẻ">Món ăn cho trẻ</option>
+                <option value="Món tráng miệng">Món tráng miệng</option>
+                <option value="Món chính">Món chính</option>
+                <option value="Nhanh và dễ">Nhanh và dễ</option>
+                <option value="Bánh">Bánh</option>
+                <option value="Món nhậu">Món nhậu</option>
+                <option value="Món ăn thịnh hành">Món ăn thịnh hành</option> 
+            </select>
+          </div> 
           <!-- <form method="post" enctype="multipart/form-data" action="/uploadphoto"> -->
-          <label
+          <!-- <label
             for="recipient-name"
             class="col-form-label"
             style="font-weight: bold"
@@ -152,7 +223,7 @@
           >
           <br />
           <br />
-          <input type="file" name="myImageEdit" accept="image/*" />
+          <input type="file" name="myImageEdit" accept="image/*" /> -->
 
           <!-- <input type="submit" value="Upload Photo"> -->
           <div class="modal-footer">
