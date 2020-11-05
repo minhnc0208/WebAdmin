@@ -106,14 +106,92 @@
             <form action="/deleteLoaiProduct" method="POST" autocomplete="off" enctype="multipart/form-data" style="margin: 0 20px;">
                 
                 <div class="form-group">
-                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Mã loại món ăn:</label>
-                    <input type="text" class="form-control" id="recipient-name" name="MaLoaiMonAn" readonly="readonly" value="<%= loaimonanCanDelete.categoryid %>">
-                </div>
-             
-                <div class="form-group">
-                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Tên loại món ăn:</label>
-                    <input type="text" class="form-control" id="recipient-name" name="TenLoaiMonAn" readonly="readonly" value="<%= loaimonanCanDelete.name %>">
-                </div>
+                    <label
+                      for="recipient-name"
+                      class="col-form-label"
+                      style="font-weight: bold"
+                      
+                    >
+                      Mã phân loại món ăn:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="recipient-name"
+                      name="MaPhanLoaiMonAn"
+                      readonly="readonly"
+                      value="<%= loaimonanCanDelete.mPLMA %>"
+                      
+                    />
+                  </div>
+        
+                  <div class="form-group">
+                    <label
+                      for="recipient-name"
+                      class="col-form-label"
+                      style="font-weight: bold"
+                      
+                    >
+                      Mã món ăn:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="recipient-name"
+                      name="MaMonAn"
+                      readonly="readonly"
+                      value="<%= loaimonanCanDelete.maMonAn %>"
+                    />
+                  </div>
+        
+                  <div class="form-group">
+                    <label
+                      for="recipient-name"
+                      class="col-form-label"
+                      style="font-weight: bold"
+                    >
+                       Loại món ăn:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="recipient-name"
+                      name="LoaiMonAn"
+                      value="<%= loaimonanCanDelete.loaiMon %>"
+                      readonly="readonly"
+                    />
+                  </div>
+        
+                  <div class="form-group">
+                    <label
+                      for="recipient-name"
+                      class="col-form-label"
+                      style="font-weight: bold"
+                    >
+                      Phân loại món ăn:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="recipient-name"
+                      name="PhanLoaiMonAn"
+                      value="<%= loaimonanCanDelete.plma %>"
+                      readonly="readonly"
+                    />
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Phân loại món ăn cập nhật:</label> 
+                
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="recipient-name"
+                    name="PhanLoaiMonAnCapNhat"
+                    value="<%= loaimonanCanDelete.phanLoai %>"
+                    readonly="readonly"
+                     />
+                  </div> 
 
                 
 

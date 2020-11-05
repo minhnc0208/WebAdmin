@@ -1402,11 +1402,11 @@ router.get("/editmonan/:maMonAn", function (request, response) {
   //
 });
 
-router.get("/deletemonan/:foodid", function (request, response) {
+router.get("/deletemonan/:maMonAn", function (request, response) {
   getAllFoods().then((data) => {
     const allfoods = data.val();
     const food = Object.values(allfoods).find(
-      (f) => f.foodid == request.params.foodid
+      (f) => f.maMonAn == request.params.maMonAn
     );
     console.log(food);
 
@@ -1433,11 +1433,11 @@ router.get("/editloaimonan/:mPLMA", function (request, response) {
   });
 });
 
-router.get("/deleteloaimonan/:categoryid", function (request, response) {
+router.get("/deleteloaimonan/:mPLMA", function (request, response) {
   getAllCateFood().then((data) => {
     const allcatefoods = data.val();
     const catefood = Object.values(allcatefoods).find(
-      (f) => f.categoryid == request.params.categoryid
+      (f) => f.mPLMA == request.params.mPLMA
     );
 
     console.log(catefood);
@@ -1654,7 +1654,7 @@ router.post("/deleteProduct", (req, res) => {
       food.once("value").then(function (snapshot) {
         let ok = false;
         snapshot.forEach(function (childSnapshot) {
-          if (childSnapshot.val().foodid === foodId) {
+          if (childSnapshot.val().maMonAn === foodId) {
             food.child(childSnapshot.key).remove();
             ok = true;
 
@@ -1827,13 +1827,14 @@ router.post("/deleteLoaiProduct", (req, res) => {
   }).parse(req, (err, fields, files) => {
     // console.log(fields);
 
-    const categoryId = fields.MaLoaiMonAn;
+    const categoryId = fields.MaPhanLoaiMonAn;
+    const foodId = fields.MaMonAn;
     // var key = cate.childs();
     cate.once("value").then(function (snapshot) {
       let ok = false;
       snapshot.forEach(function (childSnapshot) {
         // console.log(childSnapshot.val().categoryid, '-', categoryId,childSnapshot.val().categoryid === categoryId)
-        if (childSnapshot.val().categoryid === categoryId) {
+        if (childSnapshot.val().mPLMA === categoryId && childSnapshot.val().maMonAn === foodId) {
           cate.child(childSnapshot.key).remove();
           ok = true;
 
