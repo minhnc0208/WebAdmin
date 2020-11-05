@@ -3,14 +3,13 @@ const app = express();
 const bodyParser = require("body-parser");
 const formidable = require("formidable");
 const googleStorage = require("@google-cloud/storage");
-const mongoose = require('mongoose');
-const expressEjsLayout = require('express-ejs-layouts')
+const mongoose = require("mongoose");
+const expressEjsLayout = require("express-ejs-layouts");
 const uuid = require("uuid-v4");
 const Multer = require("multer");
 const adminLogin = require("./model/admin");
-const exceljs = require('exceljs');
-const imageToBase64 = require('image-to-base64');
-
+const exceljs = require("exceljs");
+const imageToBase64 = require("image-to-base64");
 
 // var config = {
 //   projectId: "pr0112-duan1",
@@ -22,7 +21,7 @@ var config = {
   keyFilename: "./serviceFirebase1.json",
 };
 
-var fs = require('fs');
+var fs = require("fs");
 
 // const storage = require('@google-cloud/storage')
 const { Storage } = require("@google-cloud/storage");
@@ -44,9 +43,9 @@ app.use(bodyParser.json()); // support json encoded bodies
 const router = express();
 
 // Khai báo đường dẫn static dẫn đến localhost
-app.use('/js',express.static('js'));
-app.use('/assets', express.static('assets'));
-app.use('/image',express.static('image'));
+app.use("/js", express.static("js"));
+app.use("/assets", express.static("assets"));
+app.use("/image", express.static("image"));
 //firebase
 var firebase = require("firebase-admin");
 
@@ -91,7 +90,6 @@ var hoadonchitiet = db.ref("Bill/billdetail");
 var danhgia = db.ref("DanhGia");
 
 var like = db.ref("Likes");
-
 
 // food.once('value',function(snap)
 //   {
@@ -166,25 +164,25 @@ async function getAllHoaDonChiTiet(bill_id) {
   var hoaDonChiTiet = (await hoadon.once("value")).val();
   var hoaDonChiTietArray = Object.entries(hoaDonChiTiet);
 
-  return hoaDonChiTietArray[0].find(f => f.billid === bill_id);
+  return hoaDonChiTietArray[0].find((f) => f.billid === bill_id);
 }
 
-async function getAllDanhGia(){
-  return await danhgia.once("value",function(snap){
-      const temp4 = snap.val();
-      return temp4;
+async function getAllDanhGia() {
+  return await danhgia.once("value", function (snap) {
+    const temp4 = snap.val();
+    return temp4;
   });
 }
 
-async function getAllLike(){
-  return await like.once("value", function(snap){
+async function getAllLike() {
+  return await like.once("value", function (snap) {
     const temp5 = snap.val();
     return temp5;
   });
 }
 
 // async function login(emailLogin){
-//   var emailLogin = 
+//   var emailLogin =
 // }
 
 // var a = await getAllHoaDonChiTiet('1590829888816');
@@ -195,7 +193,7 @@ async function getAllLike(){
 // //router
 var path = require("path");
 const { Router } = require("express");
-var passport = require('passport');
+var passport = require("passport");
 // var morgan       = require('morgan');
 // var cookieParser = require('cookie-parser');
 
@@ -316,21 +314,20 @@ var pros1 = [
   },
 ];
 
-
 // function to encode file data to base64 encoded string
 function base64_encode(file) {
   // read binary data
   var bitmap = fs.readFileSync(file);
   // convert binary data to base64 encoded string
-  return new Buffer(bitmap).toString('base64');
+  return new Buffer(bitmap).toString("base64");
 }
 
 function base64_decode(base64str, file) {
   // create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
-  var bitmap = new Buffer(base64str, 'base64');
+  var bitmap = new Buffer(base64str, "base64");
   // write buffer to file
   fs.writeFileSync(file, bitmap);
-  console.log('******** File created from base64 encoded string ********');
+  console.log("******** File created from base64 encoded string ********");
 }
 
 // view engine setup
@@ -1219,12 +1216,11 @@ app.use(express.static(path.join(__dirname, "public")));
 //   new formidable.IncomingForm()
 //   .parse(req, (err, fields, files) => {
 //     console.log(fields);
-   
+
 //     if(fields.emailLogin =="admin@gmail.com" && fields.passLogin == "admin"){
 //       // console.log(fields.emailLogin + fields.passLogin);
 //       console.log("Đăng nhập thành công");
-    
-      
+
 //       res.redirect("product");
 //     }
 //     else {
@@ -1234,14 +1230,11 @@ app.use(express.static(path.join(__dirname, "public")));
 //   });
 // });
 
-
-
 router.get("/", function (request, response) {
   response.render("home", { title: "Trang chu" });
 });
 
 router.get("/login", function (request, response) {
-
   response.render("login");
 });
 
@@ -1286,7 +1279,6 @@ router.get("/thongke", function (request, response) {
 
     response.render("thongke", { thongke1: Object.values(data.val()) });
   });
-
 });
 
 router.get("/contact", function (request, response) {
@@ -1299,7 +1291,6 @@ router.get("/danhgia", function (request, response) {
 
     response.render("danhgia", { danhgia1: Object.values(data.val()) });
   });
-  
 });
 
 router.get("/hoadonchitiet/:bill_id", function (request, response) {
@@ -1512,7 +1503,7 @@ router.post("/insertProduct", (req, res) => {
     .on("end", () => console.log("end"))
     .parse(req, async (err, fields, files) => {
       //console.log(fields);
-      
+
       var base64 = await imageToBase64(files.myImage.path);
 
       // bucket.upload(
@@ -1529,37 +1520,28 @@ router.post("/insertProduct", (req, res) => {
       //   (err, file, callback) => {
       //     if (err) console.log(err.stack);
 
-          // console.log(file.metadata);
-          // let ok = false
-          food
-            .push()
-            .set({
+      // console.log(file.metadata);
+      // let ok = false
+      food.push().set({
+        maNguoiDung: fields.MaNguoiDung,
+        maMonAn: fields.MaMonAn,
+        anhMonAn: base64,
+        tenMonAn: fields.TenMon,
+        giaMonAn: fields.GiaMonAn,
+        khauPhan: fields.KhauPhan,
+      }),
+        cate
+          .push()
+          .set({
+            loaiMon: fields.LoaiMon,
+            mPLMA: fields.MaPhanLoaiMonAn,
+            maMonAn: fields.MaMonAn,
+            plma: fields.PhanLoaiMonAn,
+          })
+          .catch((err) => {
+            console.log("loi");
+          });
 
-              maNguoiDung: fields.MaNguoiDung,
-              maMonAn: fields.MaMonAn,
-              anhMonAn: base64,
-              tenMonAn: fields.TenMon,
-              giaMonAn: fields.GiaMonAn,
-              khauPhan:fields.KhauPhan,
-
-              
-             
-            }), 
-            cate
-            .push()
-            .set({
-
-              loaiMon :fields.LoaiMon,
-              mPLMA: fields.MaPhanLoaiMonAn,
-              maMonAn: fields.MaMonAn,
-              plma: fields.PhanLoaiMonAn,
-              
-            })
-            .catch((err) => {
-              console.log("loi");
-            });
-
-            
       //   }
       // );
     });
@@ -1595,31 +1577,29 @@ router.post("/updateProduct", (req, res) => {
     .on("end", () => console.log("end"))
     .parse(req, async (err, fields, files) => {
       var base64 = await imageToBase64(files.myImageEdit.path);
-          getAllFoods().then((data) => {
-            const allfoods = data.val();
-            const foodLocal = Object.entries(allfoods).filter((f) => {
-              // console.log(f[1].foodid);
-              return f[1].maMonAn == fields.MaMonAn;
-            });
-            console.log(foodLocal);
-            if (foodLocal.length == 0) {
-              res.render("error");
-              return;
-            }
-            var ref = food.child(foodLocal[0][0]);
-            ref.update({
-              anhMonAn: base64,
-              tenMonAn: fields.TenMon,
-              giaMonAn: fields.GiaMonAn,
-              khauPhan:fields.KhauPhan
-            });
-            res.render("editmonan", { monanCanUpdate: foodLocal[0] });
-          });
-        
-      
+      getAllFoods().then((data) => {
+        const allfoods = data.val();
+        const foodLocal = Object.entries(allfoods).filter((f) => {
+          // console.log(f[1].foodid);
+          return f[1].maMonAn == fields.MaMonAn;
+        });
+        console.log(foodLocal);
+        if (foodLocal.length == 0) {
+          res.render("error");
+          return;
+        }
+        var ref = food.child(foodLocal[0][0]);
+        ref.update({
+          anhMonAn: base64,
+          tenMonAn: fields.TenMon,
+          giaMonAn: fields.GiaMonAn,
+          khauPhan: fields.KhauPhan,
+        });
+        res.render("editmonan", { monanCanUpdate: foodLocal[0] });
+      });
     });
 
-  res.redirect(200,"/product");
+  res.redirect(200, "/product");
 });
 
 router.post("/deleteProduct", (req, res) => {
@@ -1792,27 +1772,25 @@ router.post("/updateLoaiProduct", (req, res) => {
       //   },
       //   (err, file, callback) => {
       //     if (err) console.log("loi 2");
-          getAllCateFood().then((data) => {
-            const allcatefoods = data.val();
-            const catefoodLocal = Object.entries(allcatefoods).filter((f) => {
-             
-              return f[1].mPLMA == fields.MaPhanLoaiMonAn;
-            });
-            console.log(catefoodLocal);
-            if (catefoodLocal.length == 0) {
-              res.render("error");
-              return;
-            }
-            var ref = cate.child(catefoodLocal[0][0]);
-            ref.update({
-              
-              phanLoai:fields.PhanLoaiMonAnCapNhat,
-            });
-            res.render("editloaimonan", {
-              loaimonanCanUpdate: catefoodLocal[0],
-            });
-          });
-        // }
+      getAllCateFood().then((data) => {
+        const allcatefoods = data.val();
+        const catefoodLocal = Object.entries(allcatefoods).filter((f) => {
+          return f[1].mPLMA == fields.MaPhanLoaiMonAn;
+        });
+        console.log(catefoodLocal);
+        if (catefoodLocal.length == 0) {
+          res.render("error");
+          return;
+        }
+        var ref = cate.child(catefoodLocal[0][0]);
+        ref.update({
+          phanLoai: fields.PhanLoaiMonAnCapNhat,
+        });
+        res.render("editloaimonan", {
+          loaimonanCanUpdate: catefoodLocal[0],
+        });
+      });
+      // }
       // );
     });
   res.redirect(200, "/loaiproduct");
@@ -1834,7 +1812,10 @@ router.post("/deleteLoaiProduct", (req, res) => {
       let ok = false;
       snapshot.forEach(function (childSnapshot) {
         // console.log(childSnapshot.val().categoryid, '-', categoryId,childSnapshot.val().categoryid === categoryId)
-        if (childSnapshot.val().mPLMA === categoryId && childSnapshot.val().maMonAn === foodId) {
+        if (
+          childSnapshot.val().mPLMA === categoryId &&
+          childSnapshot.val().maMonAn === foodId
+        ) {
           cate.child(childSnapshot.key).remove();
           ok = true;
 
@@ -1903,7 +1884,7 @@ router.post("/updateUser", (req, res) => {
   })
     .on("fileBegin", function (filename, file) {
       // console.log(filename);
-      file.path = path.join("D:/Exmaple01/Exmaple01/public", dateTimeName2);
+      // file.path = path.join("D:/Exmaple01/Exmaple01/public", dateTimeName2);
       // console.log(file.path);
     })
     .on("file", async function (name, file) {
@@ -1918,8 +1899,7 @@ router.post("/updateUser", (req, res) => {
       return;
     })
     .on("end", () => console.log("end"))
-    .parse(req, (err, fields, files) => {
-      
+    .parse(req, async (err, fields, files) => {
       // var base64Avatar = files.avatar_image != null ? await imageToBase64(files.avatar_image.path) : "";
       // var base64Cover =  files.cover_image != null ? await imageToBase64(files.cover_image.path) : "";
 
@@ -1948,84 +1928,127 @@ router.post("/updateUser", (req, res) => {
       //   });
       //   // res.render("edituser", { userCanUpdate: userLocal[0] });
       
-      // });
-      bucket.upload(
-        files.myImageEdit.path,
-        {
-          public: true,
-          gzip: true,
-          metadata: {
-            firebaseStorageDownloadTokens: uuid(),
-            cacheControl: "public, max-age=31536000",
-          },
+      // console.log(files);
+      // return;
+      var avatar = await bucket.upload(files.avatar_image.path, {
+        public: true,
+        gzip: true,
+        metadata: {
+          firebaseStorageDownloadTokens: uuid(),
+          cacheControl: "public, max-age=31536000",
         },
-        (err, file, callback) => {
-          if (err) console.log("loi 2");
-          getAllUser().then((data) => {
-            const allusers = data.val();
-            const userLocal = Object.entries(allusers).filter((f) => {
-              return f[1].uid == fields.MaKhachHang;
-            });
-            // console.log('bbb', userLocal);
-            if (userLocal.length == 0) {
-              res.render("erorr");
-              return;
-            }
-            var ref = user.child(userLocal[0][0]);
-            ref.update({
-              email:fields.EmailKhachHang,
-              fullname: fields.TenKhachHang,
-              image:file.metadata.mediaLink,
-              phone: fields.SoDienThoai,
-              uid: fields.MaKhachHang,
-            }).then((f) => {
-              res.redirect("/user");
-            }).catch((err) => {
-              res.render("error");
-            });
-            // res.render("edituser", { userCanUpdate: userLocal[0] });
-          
-          }).then(
-            bucket.upload(
-              files.myImageEdit1.path,
-              {
-                public: true,
-                gzip: true,
-                metadata: {
-                  firebaseStorageDownloadTokens: uuid(),
-                  cacheControl: "public, max-age=31536000",
-                },
-              },
-              (err, file, callback) => {
-                if (err) console.log("loi 2");
-                getAllUser().then((data) => {
-                  const allusers = data.val();
-                  const userLocal = Object.entries(allusers).filter((f) => {
-                    return f[1].uid == fields.MaKhachHang;
-                  });
-                  // console.log('bbb', userLocal);
-                  if (userLocal.length == 0) {
-                    res.render("erorr");
-                    return;
-                  }
-                  var ref = user.child(userLocal[0][0]);
-                  ref.update({
-                   
-                    cover:file.metadata.mediaLink,
-                  }).then((f) => {
-                    res.redirect("/user");
-                  }).catch((err) => {
-                    res.render("error");
-                  });
-                  // res.render("edituser", { userCanUpdate: userLocal[0] });
-                
-                });
-              }
-            )
-          )
+      });
+
+      var cover = await bucket.upload(files.myImageEdit1.path, {
+        public: true,
+        gzip: true,
+        metadata: {
+          firebaseStorageDownloadTokens: uuid(),
+          cacheControl: "public, max-age=31536000",
+        },
+      });
+
+      getAllUser().then((data) => {
+        const allusers = data.val();
+        const userLocal = Object.entries(allusers).filter((f) => {
+          return f[1].uid == fields.MaKhachHang;
+        });
+        // console.log('bbb', userLocal);
+        if (userLocal.length == 0) {
+          res.render("erorr");
+          return;
         }
-      );
-     
+        var ref = user.child(userLocal[0][0]);
+        ref
+          .update({
+            email: fields.EmailKhachHang,
+            fullname: fields.TenKhachHang,
+            image: avatar[0].metadata.mediaLink,
+            cover: cover[0].metadata.mediaLink,
+            phone: fields.SoDienThoai,
+            uid: fields.MaKhachHang,
+          })
+          .then((f) => {
+            res.redirect("/user");
+          })
+          .catch((err) => {
+            res.render("error");
+            // });
+            // bucket.upload(
+            //   files.myImageEdit.path,
+            //   {
+            //     public: true,
+            //     gzip: true,
+            //     metadata: {
+            //       firebaseStorageDownloadTokens: uuid(),
+            //       cacheControl: "public, max-age=31536000",
+            //     },
+            //   },
+            //   (err, file1, callback) => {
+            //     if (err) console.log("loi 2");
+            //     getAllUser().then((data) => {
+            //       const allusers = data.val();
+            //       const userLocal = Object.entries(allusers).filter((f) => {
+            //         return f[1].uid == fields.MaKhachHang;
+            //       });
+            //       // console.log('bbb', userLocal);
+            //       if (userLocal.length == 0) {
+            //         res.render("erorr");
+            //         return;
+            //       }
+            //       var ref = user.child(userLocal[0][0]);
+            //       ref.update({
+            //         email:fields.EmailKhachHang,
+            //         fullname: fields.TenKhachHang,
+            //         image:file1.metadata.mediaLink,
+            //         phone: fields.SoDienThoai,
+            //         uid: fields.MaKhachHang,
+            //       }).then(
+            //         bucket.upload(
+            //           files.myImageEdit1.path,
+            //           {
+            //             public: true,
+            //             gzip: true,
+            //             metadata: {
+            //               firebaseStorageDownloadTokens: uuid(),
+            //               cacheControl: "public, max-age=31536000",
+            //             },
+            //           },
+            //           (err, file2, callback) => {
+            //             if (err) console.log("loi 2");
+            //             getAllUser().then((data) => {
+            //               const allusers = data.val();
+            //               const userLocal = Object.entries(allusers).filter((f) => {
+            //                 return f[1].uid == fields.MaKhachHang;
+            //               });
+            //               // console.log('bbb', userLocal);
+            //               if (userLocal.length == 0) {
+            //                 res.render("erorr");
+            //                 return;
+            //               }
+            //               var ref = user.child(userLocal[0][0]);
+            //               ref.update({
+
+            //                 cover:file2.metadata.mediaLink,
+            //               }).then((f) => {
+            //                 res.redirect("/user");
+            //               }).catch((err) => {
+            //                 res.render("error");
+            //               });
+            //               // res.render("edituser", { userCanUpdate: userLocal[0] });
+
+            //             });
+            //           }
+            //         )
+            //       )
+            // .then((f) => {
+            //   res.redirect("/user");
+            // }).catch((err) => {
+            //   res.render("error");
+            // });
+            // res.render("edituser", { userCanUpdate: userLocal[0] });
+          });
+      });
     });
 });
 
@@ -2216,26 +2239,20 @@ router.post("/deleteHoaDon", (req, res) => {
 });
 
 router.post("/postLogin", (req, res) => {
-  new formidable.IncomingForm()
-  .parse(req, (err, fields, files) => {
+  new formidable.IncomingForm().parse(req, (err, fields, files) => {
     console.log(fields);
-   
-    if(fields.emailLogin =="admin@gmail.com" && fields.passLogin == "admin"){
+
+    if (fields.emailLogin == "admin@gmail.com" && fields.passLogin == "admin") {
       // console.log(fields.emailLogin + fields.passLogin);
       console.log("Đăng nhập thành công");
-    
-      
+
       res.redirect("product");
-    }
-    else {
+    } else {
       console.log(err);
-      res.render("error")
+      res.render("error");
     }
   });
 });
-
-
-
 
 //// Lấy IP theo máy tính
 
