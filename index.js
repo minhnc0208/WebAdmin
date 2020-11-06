@@ -1784,6 +1784,7 @@ router.post("/updateLoaiProduct", (req, res) => {
         }
         var ref = cate.child(catefoodLocal[0][0]);
         ref.update({
+          plma:fields.PhanLoaiMonAn,
           phanLoai: fields.PhanLoaiMonAnCapNhat,
         });
         res.render("editloaimonan", {
