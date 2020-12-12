@@ -1358,11 +1358,11 @@ router.get("/edituser/:uid", function (request, response) {
   });
 });
 
-router.get("/deleteuser/:usname", function (request, response) {
+router.get("/deleteuser/:uid", function (request, response) {
   getAllUser().then((data) => {
     const allusers = data.val();
     const user = Object.values(allusers).find(
-      (f) => f.usname == request.params.usname
+      (f) => f.uid == request.params.uid
     );
     console.log(user);
     if (user === undefined) {
@@ -2080,13 +2080,13 @@ router.post("/deleteUser", (req, res) => {
     })
     .on("end", () => console.log("end"))
     .parse(req, (err, fields, files) => {
-      const userId = fields.TenDangNhap;
+      const userId = fields.MaKhachHang;
 
       user.once("value").then(function (snapshot) {
         let ok = false;
 
         snapshot.forEach(function (childSnapshot) {
-          if (childSnapshot.val().usname === userId) {
+          if (childSnapshot.val().uid === userId) {
             user.child(childSnapshot.key).remove();
             ok = true;
 

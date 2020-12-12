@@ -167,7 +167,7 @@
             <a class="nav-link" href="/thongke">Thống kê</a>
           </li>
           <li class="nav-item">
-            <i class="fas fa-chart-bar"></i>
+            <i class="fas fa-star"></i>
             <a class="nav-link" href="/danhgia">Đánh giá</a>
           </li>
         </ul>
@@ -226,7 +226,7 @@
               <th>STT</th>
               <th>Mã hóa đơn</th>
               <th>Ngày tạo hóa đơn</th>
-              <th>Địa chỉ</th>
+              
               <th>Phương thức thanh toán</th>
               <th>Trạng thái</th>
               <th>Tổng giá</th>
@@ -250,7 +250,7 @@
                          <td>1</td>
               <td class="tcenter"><%= item.billid %></td>
               <td class="tcenter"><%= item.date %></td>
-              <td class="tcenter"><%= item.address %></td>
+              
               <td class="tcenter"><%= item.payments %></td>
               <td class="tcenter"><%= item.state %></td>
               <td class="tcenter"><%= item.total %></td>
@@ -475,7 +475,7 @@
       aoColumnDefs: [
         {
           bSortable: false,
-          aTargets: [8, 9, 10],
+          aTargets: [7,8,9],
         },
       ],
     });

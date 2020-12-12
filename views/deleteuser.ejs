@@ -106,25 +106,25 @@
             <form action="/deleteUser" method="POST" autocomplete="off" enctype="multipart/form-data" style="margin: 0 20px;">
                 
                 <div class="form-group">
-                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Tên khách hàng:</label>
-                    <input type="text" class="form-control" id="recipient-name" name="TenKhachHang" readonly="readonly" value="<%= userCanDelete.fullname %>">
+                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Email đăng nhập</label>
+                    <input type="text" class="form-control" id="recipient-name" name="TenDangNhap" readonly="readonly" value="<%= userCanDelete.email %>">
                 </div>
                 <div class="form-group">
-                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;">Tên đăng nhập:</label>
-                    <input type="text" class="form-control" id="recipient-name" name="TenDangNhap" readonly="readonly" value="<%= userCanDelete.usname %>">
+                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;">Tên hiển thị:</label>
+                    <input type="text" class="form-control" id="recipient-name" name="TenHienThi" readonly="readonly" value="<%= userCanDelete.fullname %>">
                 </div>
                 <div class="form-group">
-                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Mật khẩu:</label>
-                    <input type="text" class="form-control" id="recipient-name" name="MatKhau" readonly="readonly" value="<%= userCanDelete.password %>">
+                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Số điện thoại</label>
+                    <input type="text" class="form-control" id="recipient-name" name="SoDienThoai" readonly="readonly" value="<%= userCanDelete.phone %>">
                 </div>
 
                 <div class="form-group">
-                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Số điện thoại:</label>
-                    <input type="text" class="form-control" id="recipient-name" name="SoDienThoai" readonly="readonly" value="<%= userCanDelete.phone %>">
+                    <label for="recipient-name" class="col-form-label" style="font-weight: bold;">Mã khách hàng:</label>
+                    <input type="text" class="form-control" id="recipient-name" name="MaKhachHang" readonly="readonly" value="<%= userCanDelete.uid %>">
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="recipient-name" class="col-form-label"> Giới tính:</label>
-                    <!-- <input type="text" class="form-control" id="recipient-name" name="email"> -->
+                    <input type="text" class="form-control" id="recipient-name" name="email">
                     <input type="text" class="form-control" id="recipient-name" name="GioiTinh" readonly="readonly" value="<%= userCanDelete.gender %>">
                     
                 </div>
@@ -133,7 +133,7 @@
                     <input type="text" class="form-control" id="recipient-name" name="QuyenSuDung"readonly="readonly" value="<%= userCanDelete.ruler %>"
                         >
                         
-                </div>
+                </div> -->
 
                 <!-- <form method="post" enctype="multipart/form-data" action="/uploadphoto"> -->
                 <!-- <label for="recipient-name" class="col-form-label" style="font-weight: bold;"> Ảnh món ăn:</label>
